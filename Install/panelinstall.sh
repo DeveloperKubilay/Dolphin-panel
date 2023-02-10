@@ -5,7 +5,7 @@ echo "Do you want to install nodejs? Y/N"
 echo "Installing nodejs@16"
 sudo apt update -y
 curl -s https://deb.nodesource.com/setup_16.x | sudo bash
-sudo apt install nodejs npm -y
+sudo apt install nodejs -y
 clear
 node panelinstaller.js
 cd ..
