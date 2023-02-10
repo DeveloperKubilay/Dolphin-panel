@@ -1,0 +1,283 @@
+* {
+  background-color: #2f2e2e;
+  font-family: sans-serif;
+  color: #ddd;
+  font-style: normal;
+  text-decoration: none;
+}
+.topbuttons{
+  float:left;
+  width:25px;
+  height:25px;
+  padding: 7px 7px;
+}
+.topbuttons:hover{
+  background-color: rgb(77, 77, 77);
+}
+#dolphinpaneltext{
+  font-size:25px;
+  font-family: 'Brush Script MT', cursive;
+}
+.inhtml {
+  border-radius: 20px;
+  background-color: rgb(23, 22, 22);
+  margin: auto;
+  padding: 1% 1%;
+  width: 1100px;
+  height: auto;
+  display: flex;
+  box-shadow: 0px 0px 25px 8px rgb(21, 21, 21);
+}
+a {background-color: transparent;}
+h1 {background-color: transparent;}
+h2 {background-color: transparent;}
+h3 {background-color: transparent;}
+div {background-color: transparent;}
+.left-bar {
+  padding: 0.5%;
+  width: 25%;
+  border-radius: 10px;
+}
+.right-bar {
+  padding: 1% 3%;
+  width: 70%;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+.button {
+  float: left;
+  padding: 8% 3%;
+  width: 100%;
+  background-color: #878484;
+  border-radius: 5px;
+  color: black;
+  margin: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button:hover {background-color: #767373;}
+.disks {
+  background-color: #2e2c28;
+  border-radius: 5px;
+  width: 100%;
+  padding: 3%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.disks:hover {background-color: #242320;}
+.diskprocessbar {
+  word-wrap: normal;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.buttonvnc {
+  float: left;
+  padding: 8% 3%;
+  width: 100%;
+  background-color: #349eeb;
+  border-radius: 5px;
+  color: black;
+  margin: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.buttonvnc:hover {background-color: #2e8ed2;}
+.buttonngrok:hover {background-color: #238dd9;}
+.buttonngrok {
+  float: left;
+  padding: 8% 3%;
+  width: 100%;
+  background-color: #1d7cbf;
+  border-radius: 5px;
+  color: black;
+  margin: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.buttonrdp {
+  float: left;
+  padding: 8% 3%;
+  width: 100%;
+  background-color: #3deb34;
+  border-radius: 5px;
+  color: black;
+  margin: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.buttonip:hover {background-color: #32c62a;}
+.buttonip {
+  float: left;
+  padding: 8% 3%;
+  width: 100%;
+  background-color: #e28e08;
+  border-radius: 5px;
+  color: black;
+  margin: 1%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.buttonip:hover { background-color: #ff9e03;}
+.button2 {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 3%;
+  width: 20%;
+  cursor: pointer;
+  float: left;
+  background-color: #878484;
+  border-radius: 5px;
+  margin: 1%;
+  color: black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button2:hover {background-color: #737171;}
+.selectmenu {
+  padding: 3% 1%;
+  border-radius: 20px;
+  width: 40%;
+  float: left;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.canvas {
+  width: 100%;
+  max-width: 300px;
+  background-color: transparent;
+}
+.ramchart {
+  position: relative;
+  left: 50%;
+  top: -25.5%;
+  width: 50%;
+}
+.cpuchart {width: 50%;}
+.ports {float: left;}
+#systemstatus {
+  padding: 3%;
+  width: 15%;
+  height: 40px;
+  box-shadow: 0px 0px 25px 8px rgb(74, 75, 75);
+}
+#systemsos {
+  padding: 2.5%;
+  width: 20%;
+  height: 40px;
+  background-color: #4a4a4a;
+  color: #c9c9c9;
+}
+#systemsuser {
+  padding: 3%;
+  width: 17%;
+  height: 40px;
+  cursor: pointer;
+  background-color: #4a4a4a;
+  color: #c9c9c9;
+}
+#systemspassword {
+  padding: 3%;
+  width: 17%;
+  height: 40px;
+  cursor: pointer;
+  color: #029af8;
+  background-color: #4a4a4a;
+}
+#infosystem {
+  padding: 3%;
+  width: 20%;
+  background-color: #3d3b39;
+  color: #ddd;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#systemsos:hover {background-color: #434141;}
+#systemsuser:hover {background-color: #434141;}
+#systemspassword:hover {background-color: #434141;}
+#infosystem:hover {background-color: #2e2d2d;}
+#infosystemlogs {
+  background-color: #4d4d4d;
+  color: white;
+}
+#alertbutton {
+  float: left;
+  background-color: rgb(200, 28, 28);
+  color: #ddd;
+}
+#infosystemlogs:hover {background-color: #323232;}
+#alertbutton:hover {background-color: rgb(219, 33, 33);}
+.alertbox {
+  border-radius: 20px;
+  background-color: rgb(23, 22, 22);
+  margin: auto;
+  height: auto;
+  width: 85%;
+  visibility: hidden;
+  word-wrap: break-word;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media screen and (max-width: 1400px) {
+  .inhtml {width: 900px;}
+}
+@media screen and (max-width: 800px) {
+  .inhtml { width: 700px;}
+}
+@media screen and (max-width: 600px) {
+  .inhtml {
+    display: block;
+    width: 100%;
+  }
+  .left-bar {width: 85%;}
+  .ports {
+    margin-bottom: 15%;
+    width: 110%;
+  }
+  #ipbutton {margin-bottom: 10%;}
+  .right-bar {width: 85%;}
+  #systemstatus {
+    width: 100%;
+    margin-bottom: 2%;
+    padding: 4%;
+  }
+  #systemsos {
+    width: 100%;
+    margin-bottom: 2%;
+    padding: 4%;
+  }
+  #systemsuser {
+    width: 100%;
+    margin-bottom: 2%;
+    padding: 4%;
+  }
+  #systemspassword {
+    width: 100%;
+    margin-bottom: 5%;
+    padding: 4%;
+  }
+  #infosystem {
+    width: 100%;
+    padding: 6%;
+  }
+  #infosystemlogs {
+    width: 100%;
+    margin-bottom: 10%;
+    padding: 6%;
+  }
+  .button2 {
+    width: auto;
+    padding: 5%;
+  }
+  #selectmenu {
+    padding: 4%;
+    width: 38%;
+  }
+  .cpuchart {width: 100%;}
+  .ramchart {
+    width: 100%;
+    position: relative;
+    left: 0%;
+    top: 0%;
+  }
+  #dolphinpaneltext {margin-bottom: 5%;}
+  .alertbox {width: 100%;}
+  .canvas {max-width: 100%;}
+}

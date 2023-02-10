@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - Servers</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/servers.css">
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Servers<small style="font-size:20px"> All servers</small></h1>
+
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Servers</h3>
+ 
+</div><br><br><br>
+<div class="inner-box">
+<a href="/admin/addservers" class="create-new-button">Create new</a>
+<form action="/admin/servers/search" method="post">
+  <input type="submit" value="🔎" class="create-send-button" >
+  <% if(search) { %>
+  <input class="search" name="search" value="<%= search %>">
+  <% } else { %>
+   <input class="search" name="search" placeholder="Server name">
+  <% } %>
+</form>
+<% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/servers">❌</a><% } %>
+<br><br>
+<table class="table">
+<tr>
+  <th>Server name</th>
+  <th>Gill name</th>
+  <th>Owner</th>
+  <th>Ip</th>
+</tr>
+<% for (var i = 0; i < servers.length; i++) { var db = serversdb.get(servers[i]+"-server"); %>
+  <tr>
+	<td><a href="/admin/editservers/<%= db.id %>" style="color: rgb(0, 189, 252);"><%= db.id %></a></td>
+	<% if(gills.filter(z=> z.ip === db.ip).length) { %>	
+	<td><a href="/admin/editgill/<%= gills.filter(z=> z.ip === db.ip)[0].name %>" style="color: rgb(0, 189, 252);">
+	<%= gills.filter(z=> z.ip === db.ip)[0].name %></a></td>
+	<% } else { %><td>Not Found</td><% } %>
+    <td><a href="/admin/edituser/<%= db.owner %>" style="color: rgb(0, 189, 252);"><%= db.owner %></a></td>
+    <td><%= db.ip %></td>
+  </tr>
+  <% } %>
+</table>
+
+</div>
+</div><br>
+</div></body></html>

@@ -1,0 +1,102 @@
+*{
+    background-color: rgb(43, 46, 52);
+    font-family: sans-serif;
+    color: #ddd;
+    font-style: normal;
+    text-decoration: none;
+}
+.loginbox{
+    border-radius: 30px;
+    background-color: rgb(23, 22, 22);
+    margin: auto;
+    width: 35%;
+    padding: 20px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.logintext-1{
+    margin-top: 3%;
+    text-align: center;
+}
+.logintext-2{
+    color: rgb(112, 111, 111);
+    text-align: center;  
+}
+.login-in-image{
+    background-color: transparent;
+    padding: 50px 10px;
+}
+.login-in-box{
+    background-color: transparent;
+    float: right;
+    width: 50%;
+    padding: 20px 10px;
+}
+.login-in-text{
+    font-size: 120%;
+    background-color: transparent;
+}
+.login-in-inbox{
+    padding: 4% 10%;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.login-in-submit{
+    padding: 4% 22%;
+    border-radius: 10px; 
+    color: #ddd;
+    background-color:rgb(0, 98, 255);
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.login-in-submit:hover{
+    background-color:rgb(5, 84, 210);
+    cursor: pointer;
+}
+.login-res-text{
+    background-color:transparent;
+}
+.link{
+    color:rgb(0, 149, 255);
+    background-color:transparent;
+}
+.link:hover{
+    color:rgb(0, 110, 255);
+    background-color:transparent;
+}
+@media screen and (max-width: 4824px) {.loginbox{position: relative;padding: 4% 10px;}}
+@media screen and (max-width: 1824px) {.loginbox{position: relative;width: 40%;padding: 4% 10px;}}
+@media screen and (max-width: 1424px) {.loginbox{position: relative;width: 60%;padding: 5% 10px;}}
+@media screen and (max-width: 900px) {
+    .loginbox{
+        position: relative;
+        width: 70%;
+        padding: 10% 10px;
+    }
+  }
+
+@media screen and (max-width: 600px) {
+    .loginbox{
+        margin: auto;
+        position: relative;
+        width: 70%;
+        padding: 90% 10px;
+    }
+    .login-in-box{
+        float: left;
+        width: 50%;
+        padding: 1px 15px;
+        position: relative;
+    }
+    .login-in-image{
+        position: relative;
+        margin-top:-100%
+    }
+    .logintext-1{
+        font-size:150%;
+    }
+    .logintext-2{
+        font-size:100%;
+    }
+  }
+

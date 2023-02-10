@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - Os</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/os.css">
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Os<small style="font-size:20px"> All operating systems you have added</small></h1>
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Os</h3>
+</div><br><br><br>
+<div class="inner-box">
+    <a href="/admin/addos" style="float: left;" class="create-new-button">Create new</a>
+	<br>
+ <table class="table">
+ <tr>
+  <th>ID</th>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Port Type</th>
+  <th>Servers</th>
+ </tr>
+ <% for (var i = 0; i < os.get("os").length; i++) {%>
+ <tr>
+   <td><%= i %></td>
+   <td><a href="/admin/editos/<%= os.get("os")[i].name %>" style="color: rgb(0, 189, 252);"><%= os.get("os")[i].name %></a></td>
+   <td><%= os.get("os")[i].description %></td>
+   <td><%= os.get("os")[i].type %></td>  
+   <td><%= os.get(os.get("os")[i].name+"-servers") || 0 %></td>
+ </tr>
+ <% } %>
+</div><br>
+</div></body></html>

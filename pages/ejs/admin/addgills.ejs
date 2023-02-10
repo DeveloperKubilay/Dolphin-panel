@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - <% if(gills) { %> Edit to gills <% } else { %> Connect to gills <% } %></title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/gills.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Gills<small style="font-size:20px"> <% if(gills) { %> Edit to gills <% } else { %> Connect to gills <% } %></small></h1>
+<div class="configure-box" >
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;"><% if(gills) {%>
+ <a class="transparent" id="editgillsname"><%= gills.name %></a><%}%> Gill</h3>
+</div><br><br><br>
+<div class="inner-box">
+    <form action="/api/gills/add" id="addgillform" method="post" autocomplete="off" >
+	    <h3>Token</h3>
+		<a class="transparent" onclick="tokenclick()" id="tokentext">sa</a>
+        <h3>Name</h3>
+        <% if(gills) { %>
+            <input class="input" style="width: 25%;" type="name" name="name" value="<%= gills.name %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 25%;" type="name" name="name" placeholder="Gill name" required>
+        <% } %>
+		 <h3>Ip</h3>
+        <% if(gills) { %>
+            <input class="input" style="width: 25%;" type="name" name="ip" value="<%= gills.ip %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 25%;" type="name" name="ip" placeholder="Gill ip" required>
+        <% } %>
+        <h3>Cpu</h3>
+        <% if(gills) { %>
+            <input class="input" type="number" style="width: 25%;" name="cpu"  value="<%= gills.cpu %>">
+        <% } else { %> 
+            <input class="input" type="number" style="width: 25%;" name="cpu" placeholder="Processor core">
+        <% } %>
+		<h3>Ram</h3>
+        <% if(gills) { %>
+            <input class="input" type="number" style="width: 25%;" name="ram"  value="<%= gills.ram %>">
+        <% } else { %> 
+            <input class="input" type="number" style="width: 25%;" name="ram" placeholder="Ram for mb">
+        <% } %>
+		<h3>Disk</h3>
+        <% if(gills) { %>
+            <input class="input" type="number" style="width: 25%;" name="disk"  value="<%= gills.disk %>">
+        <% } else { %> 
+            <input class="input" type="number" style="width: 25%;" name="disk" placeholder="Disc for mb">
+        <% } %>
+
+        <br><br>
+        <h3>Ports</h3>
+        <input placeholder="Write ports" id="portinput" class="input"/>
+        <a id="portbutton" class="sendbutton" >➡️</a><br><br>
+        <a class="transparent">
+       If you do x-y it adds ports between<br>
+       If you do x:y, x will be the main port, and y will be written on the panel.<br>
+       If you want to add directly, you can write x as x
+        </a>
+        <br><br><br>
+        <div id="ports" class="transparent">
+            <% if(gills) { %>
+                <% for (var i = 0; i < gills.ports.length; i++) {           
+                    if(gills.ports[i].changeport === "true") {
+                    %> 
+<a class="button-grey" style="float: left;" onclick="this.remove()"><%= gills.ports[i].port %>:<%= gills.ports[i].panelport %></a>
+                    <% } else { %>   
+<a class="button-blue" onclick="this.remove()" style="float: left;"><%= gills.ports[i].port %></a>
+                <% }}} %>
+        </div>
+	
+        <br><br><br><br><br><br>
+        <% if(gills) { %> <div id="deleteservers" class="transparent"></div> <% } %>
+<br><% if(gills) { %><input type="submit" value="Edit Gill" class="create-send-button" >
+<a id="deletegill" class="create-send-button" style="padding:0.9%" >Delete Gill</a>
+ <% } else { %><input type="submit" value="Connect to Gill" class="create-send-button" > <% }  %>
+        <br><br>
+        <a class="transparent" id="status"></a>
+    </form>
+
+
+</div>
+</div><br>
+
+<script src="/admin/addgills.js"></script>
+</div></body></html>

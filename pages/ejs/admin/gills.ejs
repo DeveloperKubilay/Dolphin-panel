@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - Gills</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/gills.css">
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Gills<small style="font-size:20px"> Who wants to fry their servers?</small></h1>
+
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Gills</h3>
+ 
+</div><br><br><br>
+<div class="inner-box">
+    <a href="/admin/addgills" style="float: left;" class="create-new-button">Connect to gills</a>
+	<br><br>
+<table class="table">
+<tr>
+  <th>Status</th>
+  <th>Name</th>
+  <th>Ip</th>
+  <th>Ports</th>
+  <th>Cpu</th>
+  <th>Ram</th>
+  <th>Disk</th>
+</tr>
+<% for (var i = 0; i < gills.length; i++) {%>
+  <tr>
+    <% if(onlineallgills.filter(z=> z.url === gills[i].ip).length) { if(gill.get(gills[i].name+"-database").ports.length){ %>
+    <td>✅</td><% } else { %><td>⚠️</td> 
+    <% }} else { %><td>❌</td><% } %>
+    <td><a href="/admin/editgill/<%= gills[i].name %>" style="color: rgb(0, 189, 252);"><%= gills[i].name %></a></td>
+	  <td><%= gills[i].ip %></td>
+    <td><%= gills[i].ports.length %> (<%= gill.get(gills[i].name+"-database").ports.length %> available)</td>
+    <td><%= gills[i].cpu %> (<%= (gill.get(gills[i].name+"-database").cpu) %> available)</td>
+ <% if(gills[i].ram > 1024) { %><td>
+ <%= (gills[i].ram/1024).toFixed(0) %>Gb (<%= (Number(String((gill.get(gills[i].name+"-database").ram)/1024).slice(0,5))).toFixed(3) %>Gb available)  </td>
+ <% } else { %> <td><%= gills[i].ram %>Mb (<%= (Number((gill.get(gills[i].name+"-database").ram))).toFixed(0) %>Mb available)</td> <% } %>
+
+ <% if(gills[i].disk > 1024) { %><td>
+ <%= (gills[i].disk/1024).toFixed(0) %>Gb (<%= (Number(String((gill.get(gills[i].name+"-database").disk)/1024).slice(0,5))).toFixed(3) %>Gb available)  </td>
+ <% } else { %> <td><%= gills[i].disk %>Mb (<%= (Number((gill.get(gills[i].name+"-database").disk))).toFixed(0) %>Mb available)</td> <% } %>
+  </tr>
+  <% } %>
+</table>
+
+</div>
+</div><br>
+
+
+
+</div></body></html>

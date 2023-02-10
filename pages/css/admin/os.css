@@ -1,0 +1,22 @@
+.textarea{
+ border-radius: 10px;
+ border: none;
+}
+.createdisk{
+ border: none;
+ border-radius: 30px;
+ padding: 1%;
+ background-color: rgb(33, 34, 35);
+}
+.createdisk:hover{background-color: rgb(30, 30, 31);cursor:pointer;}
+.disk{
+    background-color:rgb(40, 39, 39);
+    padding: 0.5%;
+    border-radius:10px;
+}
+.disk:hover{background-color:rgb(30, 30, 31);}
+.disk a {background-color:transparent;}
+.checkbox{
+    height:20px;
+	width:20px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - <% if(user) { %> Edit to user <% } else { %> Create user <% } %></title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/users.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Users<small style="font-size:20px"> <% if(user) { %> Edit to user <% } else { %> Create user <% } %></small></h1>
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">User</h3>
+</div><br><br><br>
+<div class="inner-box">
+    <form action="/api/users/add" id="adduserform" method="post">
+        <h3>Email</h3>
+        <% if(user) { %>
+            <input class="input" type="email" name="mail" value="<%= user.mail %>" required>
+        <% } else { %> 
+            <input class="input" type="email" name="mail" placeholder="example@example.com" required>
+        <% } %>
+        <h3>Username</h3>
+        <% if(user) { %>
+            <input class="input" name="username"  value="<%= user.username %>"  required>
+        <% } else { %> 
+            <input class="input" name="username" placeholder="example" required>
+        <% } %>
+        <h3>Password</h3>
+        <% if(user) { %>
+            <input class="input" name="password" type="password" name="password" minlength="6" value="<%= user.password %>"  required>
+        <% } else { %> 
+            <input class="input" name="password" type="password" name="password" minlength="6" placeholder="123456" required>
+        <% } %>
+        <% if(user) { %><div id="deleteservers" class="transparent"></div><% } %>
+        <% if(user) { %><input type="submit" value="Edit to User" class="create-send-button" >
+<a id="deleteuser" class="create-send-button" style="padding:0.9%">Delete User</a>
+ <% } else { %><input type="submit" value="Create User" class="create-send-button" > <% }  %>
+        <br><br><br>
+        <a class="transparent" id="status"></a>
+    </form>
+</div>
+</div><br>
+<script>var mail = "<%= user.mail %>"
+</script>
+<script src="/admin/adduser.js"></script>
+</div></body></html>

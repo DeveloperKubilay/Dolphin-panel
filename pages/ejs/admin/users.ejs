@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - Users</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/users.css">
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Users<small style="font-size:20px"> Registered members</small></h1>
+
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Users</h3>
+ 
+</div><br><br><br>
+<div class="inner-box">
+    <a href="/admin/adduser" class="create-new-button">Create new</a>
+    <form action="/admin/users/search" method="post">
+      <input type="submit" value="🔎" class="create-send-button" >
+      <% if(search) { %>
+      <input class="search" name="search" value="<%= search %>">
+      <% } else { %>
+        <input class="search" name="search" placeholder="admin@example.com">
+        <% } %>
+</form>
+<% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/users">❌</a><% } %>
+<br><br>
+<table class="table">
+<tr>
+  <th>ID</th>
+  <th>Email</th>
+  <th>Username</th>
+  <th>Servers Owned</th>
+</tr>
+<% if(!search) { %>
+<tr>
+  <td>0</td>
+  <td style="color: yellow;"><%= settings.owner.mail %></td>
+  <td>Admin</td>
+  <td>0</td>
+</tr>
+<% } %>
+<% for (var i = 0; i < users.length; i++) {%>
+  <tr>
+    <td><%= i+1 %></td>
+    <td><a href="/admin/edituser/<%= users[i].mail %>" style="color: rgb(0, 189, 252);"><%= users[i].mail %></a></td>
+    <td><%= users[i].username %></td>
+    <td><%= usersdb.get("servers-"+users[i].mail).length %></td>
+  </tr>
+  <% } %>
+</table>
+
+</div>
+</div><br>
+
+
+
+</div></body></html>

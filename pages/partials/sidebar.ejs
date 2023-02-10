@@ -1,0 +1,61 @@
+<div class="sidebar-list">
+<h3 class="names">PANEL</h3>
+ <a href="/admin/panel"><% if(page === "panel") { %><img src="/colors/green.png" height="20" width="10" class="imgicons"> <% } %> <img src="/admin/settings.png" height="20" width="25" class="imgicons"> Settings</a>
+ <a href="/admin/gills"><% if(page === "gills") { %><img src="/colors/green.png" height="20" width="10" class="imgicons"> <% } %> <img src="/admin/branc.png" height="20" width="25" class="imgicons"> Gills</a>
+ <h3 class="names">MANAGEMENT</h3>
+ <a href="/admin/servers"><% if(page === "servers") { %><img src="/colors/green.png" height="20" width="10" class="imgicons"> <% } %><img src="/admin/servers.png" height="20" width="25" class="imgicons"> Servers</a>
+ <a href="/admin/users"><% if(page === "users") { %><img src="/colors/green.png" height="20" width="10" class="imgicons"> <% } %><img src="/admin/users.png" height="20" width="25" class="imgicons"> Users</a>
+ <h3 class="names">MACHİNE MANAGEMENT</h3>
+ <a href="/admin/os"><% if(page === "os") { %><img src="/colors/green.png" height="20" width="10" class="imgicons"> <% } %><img src="/admin/os.png" height="20" width="25" class="imgicons"> Os</a>
+</div>   
+<style>
+  .names{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+  }
+.imgicons{background-color: rgb(42, 43, 46);}
+.sidebar-list{
+ margin: 0;
+ padding: 0 2px;
+ z-index: 1;
+ left: 0;
+ width: 200px;
+ background-color: rgb(42, 43, 46);
+ position: fixed;
+ height: 100%;
+ overflow: auto;
+ border-radius: 10px;
+ z-index: 1;
+ margin-top: 2px;
+}
+.sidebar-list h3{
+ background-color: rgb(60, 61, 62);
+ width: 100%;
+ font-size: 110%;
+}
+.sidebar-list a{
+display: block;
+text-decoration: none;
+font-family: sans-serif;
+color: rgb(202, 200, 200);
+font-size: 140%;
+background-color: rgb(42, 43, 46);
+}
+.sidebar-list a:hover{
+ background-color: #555;
+ color: white;
+ border-radius: 7px;
+ cursor: pointer;
+}
+.sidebar-list a:hover .imgicons{ background-color: #555;}
+@media screen and (max-width: 600px) {
+  .sidebar-list {
+    width: 100%;
+    position: relative;
+    top:70px;
+  }
+  .sidebar-list a {
+    float: none;
+  }
+}
+
+</style>

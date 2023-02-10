@@ -1,0 +1,39 @@
+.search{
+ float: right;
+ padding: 1% 2%;
+ border-radius: 10px;
+ border: none;
+ color: rgb(112, 111, 111);
+}
+
+.createdisk{
+ border: none;
+ border-radius: 30px;
+ padding: 1%;
+ background-color: rgb(33, 34, 35);
+}
+.createdisk:hover{background-color: rgb(30, 30, 31);cursor:pointer;}
+.disk{
+    background-color:rgb(40, 39, 39);
+    padding: 0.5%;
+    border-radius:10px;
+}
+.disk:hover{background-color:rgb(30, 30, 31);}
+.disk a {background-color:transparent;}
+
+
+.searchcontent {
+  background-color: #302f2f;
+  max-width: 50%;
+  max-height: 170px;
+  overflow: auto;
+  overflow-x:hidden;
+}
+.searchcontent a {
+  color: #ddd;
+  background-color:transparent;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block
+}
+.searchcontent a:hover {background-color:#1f1f1f;cursor:pointer;}

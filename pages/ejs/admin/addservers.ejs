@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - <% if(server) { %> Edit to Server <% } else { %> Create Server <% } %></title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/servers.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Server<small style="font-size:20px"> <% if(server) { %> Edit to server <% } else { %> Create server <% } %></small></h1>
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;"><% if(server) {%><a id="editservername" class="transparent"><%= server.id %></a><%}%> Server</h3>
+</div><br><br><br>
+<div class="inner-box">
+    <form action="/api/servers/add" id="addserversform" method="post">
+	     <% if(server) { %>
+          <h2><a href="/panel/machine/<%= server.id %>" class="transparent" style="color: rgb(0, 189, 252);">Look at user panel</a></h2>
+        <% } %> 	
+        <h3>Name</h3>
+        <% if(server) { %>
+            <input class="input" style="width: 25%;" name="name" value="<%= server.id %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 25%;" name="name" placeholder="Server name" required>
+        <% } %>
+
+<h3 id="h3owner">Server owner</h3><div class="searchcontent" id="owner-search">
+    <input required class="input" id="owner"
+style="width: 100%;height:30px;border-radius:0%;"
+onkeyup="search('owner','owner-search')" name="owner" placeholder="Find server owner">
+<% if(server) { %><script>document.querySelector("#owner").value = "<%= server.owner %>";</script><% } %> 
+<br>
+<% for (var i = 0; i < users.length; i++) { %> 
+	<a onclick="selectsearch(this,'owner-search','h3owner','owner')"><%= users[i].mail %></a>
+<% } %>
+</div>
+
+   <% if(!server) { %>
+ 		<h3 id="h3os">Os</h3><div class="searchcontent" id="os-search">
+       <input required class="input" id="os"
+ style="width: 100%;height:30px;border-radius:0%;"
+ onkeyup="search('os','os-search')" name="os" placeholder="Select os">
+ <br>
+ <% for (var i = 0; i < os.length; i++) { %> 
+ 	<a onclick="selectsearch(this,'os-search','h3os','os')"><%= os[i].name %></a>
+ <% } %>
+ </div>
+  <% } %>
+   
+  <% if(!server) { %>
+		<h3 id="h3gill">Gill</h3><div class="searchcontent" id="gill-search">
+      <input required class="input" id="gill"
+style="width: 100%;height:30px;border-radius:0%;"
+onkeyup="search('gill','gill-search',1)" name="gill" placeholder="select gill">
+<br>
+<% for (var i = 0; i < gills.length; i++) { %> 
+	<a onclick="selectsearch(this,'gill-search','h3gill','gill','<%= gills[i].ip %>')"><%= gills[i].name %></a>
+<% } %>
+</div>
+<% } %>
+		<h3 id="h3ports">Ports</h3>
+		<a id="portalert" class="transparent">First you have to choose ports</a>
+
+		<div class="searchcontent" id="ports-search">		
+            <input class="input" id="ports" style="width: 100%;height: 30px;border-radius:0%;display: none;"
+            onkeyup="search('ports','ports-search')" name="ports" placeholder="select ports">
+            <% if(gillsdb.get("gills").filter((z)=>z.ip === server.ip).length) { 
+            var usedports = gillsdb.get(gillsdb.get("gills").filter((z)=>z.ip === server.ip)[0].name+"-database").ports
+            for (var i = 0; i < usedports.length; i++) { if(usedports[i].changeport === "true") { %>
+                <a onclick="selectport(this)"><%= usedports[i].port %>:<%= usedports[i].panelport %></a>
+               <% } else { %><a onclick="selectport(this)"><%= usedports[i].port %></a><% }}} %>
+</div><br><div id="allports" style="float:left;width:100%;margin-bottom:5%;background-color:transparent;"></div>
+<% if(server) { %>
+    <script>
+$("#porttext").innerHTML = ""
+document.getElementById("ports").style.display = "block"
+$("#allports").innerHTML = "";
+document.querySelector("#portalert").innerText = "The first port you choose is the main port and looks red for your selection\n"+
+"If you do x-y it adds ports between and If you do x-y wrong, you may have problems with the ports.";
+var mainportejs = "<%= server.ports.mainport %>"
+if(mainportejs) {
+$("#allports").append(
+`<a class="button-grey" style="float: left;cursor:pointer;background-color:red;" onclick="deleteport(this);">${mainportejs}</a>`)
+}
+JSON.parse(("<%= JSON.stringify(server.ports.port || []) %>").split("&#34;").join('"')).map((x)=>{
+if(x.changeport === "true"){
+$("#allports").append(`
+<a class="button-grey" style="float: left;cursor:pointer;" onclick="deleteport(this);">${x.port}:${x.panelport}</a>
+`)}else {
+$("#allports").append(`	
+<a class="button-grey" style="float: left;cursor:pointer;" onclick="deleteport(this);">${x.panelport}</a>
+`)}
+try{document.querySelector("#allports > a:nth-child(1)").style["background-color"] = "red";}catch{}
+})
+    </script>
+<% } %>
+
+
+        <h3>Cpu</h3>
+        <% if(server) { %>
+            <input class="input" style="width: 20%;" name="cpu"  value="<%= server.cpu %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 20%;" name="cpu" placeholder="Process core" required>
+        <% } %>
+        <br><h3>Ram</h3>
+        <% if(server) { %>
+            <input class="input" style="width: 20%;" name="ram"  value="<%= server.ram %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 20%;" name="ram" placeholder="Ram of mb" required>
+        <% } %>
+        <br>
+
+  <h3>Ngrok (optional)</h3>
+  <% if(server) { %>
+      <input class="input" style="width: 25%;" name="ngrok" value="<%= server.ngrok %>">
+  <% } else { %> 
+      <input class="input" style="width: 25%;" name="ngrok" placeholder="Write ngrok token">
+  <% } %><br>
+
+        <h3>Extra disks</h3>
+   <a class="transparent">
+    Disk name: must be with the extension example x.img<br>
+    Source: link or mb should be written example http://x.img or 2048<br>
+    Resize: change downloaded file to mb<br>
+    Force type: change file extension example x.qcow2<br>
+   </a><br><br>
+   <a id="diskadd" class="createdisk" >Create a new Disk</a>
+   <div id="disks" style="background-color: transparent;"><br><br>
+
+    <script>var db = new Map();</script>
+        <% if(server) { for (var i = 0; i < disks.length; i++) { %>
+            <script>
+    if(!db.get("disksize")) db.set("disksize",0)
+    db.set("disksize",Number(db.get("disksize"))+1)
+            </script>
+            <div id="disk-<%=i+1%>" class="disk">
+                <button class='create-send-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
+                <a>Disk name:</a>
+                <input class="input" style="width: 15%;" name="name" type="name" value="<%=disks[i].name%>" id="diskname-<%=disks[i].name%>" required>
+                <br><br>
+                <a>Source:</a>
+                <input class="input" style="width: 25%;" name="source" type="name" value="<%=disks[i].url || disks[i].size %>" required>
+                <br><br>
+                <a>Resize:</a>
+                <input class="input" style="width: 15%;" name="resize" type="name" value="<%=disks[i].resize%>">
+                <br><br>
+                <a>Force type:</a>
+                <input class="input" style="width: 15%;" name="forcetype" type="name" value="<%=disks[i].forcetype%>">
+                </div><a style="background-color:transparent;" id="disk-br-<%=i+1%>"><br><br></a>
+        <% }} %> 
+    </div>
+<br><% if(server) { %><input type="submit" value="Edit to Server" class="create-send-button" >
+<a id="deleteserver" class="create-send-button" style="padding:0.9%;">Delete Server</a>
+ <% } else { %><input type="submit" value="Create Server" class="create-send-button" > <% }  %>
+        <br><br>
+        <a class="transparent" id="status"></a>
+    </form>
+
+
+</div>
+</div><br>
+<script>//ejs to js
+var ejs = {
+gills:JSON.parse(("<%= JSON.stringify(gillsdb.all()) %>").split("&#34;").join('"')),
+os:JSON.parse(("<%= JSON.stringify(osdb.all().os) %>").split("&#34;").join('"')),
+users:JSON.parse(("<%= JSON.stringify(usersdb.all()) %>").split("&#34;").join('"'))
+}
+</script>
+<% if(server) { %> 
+<script>
+ejs.server = JSON.parse(("<%= JSON.stringify(server) %>").split("&#34;").join('"'))
+ejs.disks = JSON.parse(("<%= JSON.stringify(disks) %>").split("&#34;").join('"'))
+ejs.ports = ejs.server.ports.port
+</script> <% } else { %>
+<script>ejs.server = JSON.parse(("<%= JSON.stringify(serversdb.all()) %>").split("&#34;").join('"'))</script>   <% } %>
+<script src="/admin/addservers.js"></script>
+</div></body></html>

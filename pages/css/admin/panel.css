@@ -1,0 +1,129 @@
+*{
+ background-color: rgb(68, 70, 72);
+ font-family: sans-serif;
+ color: #ddd;
+ font-style: normal;
+ text-decoration: none;
+}
+.indexhtml {
+ z-index: 1;
+ margin-left: 200px;
+ margin-top: 70px;
+ padding: 1px 16px;
+}
+.configure-box{
+ padding: 0.9% 0.5%;
+ border-radius: 10px;
+ background-color:rgb(52, 52, 52);
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.configure-box .name-box {
+ float: left;
+ padding: 0% 2%;
+ width: 95%;
+ border-radius: 20px;
+}
+.configure-box .inner-box{background-color:rgb(52, 52, 52);}
+.configure-box .inner-box h2{background-color: transparent;}
+.configure-box .inner-box h3{background-color: transparent;}
+.configure-box .inner-box h4{background-color: transparent;}
+.configure-box .inner-box img{background-color: transparent;}
+.configure-box .inner-box form{background-color: transparent;}
+.configure-box .inner-box .button-blue{
+ background-color: rgb(0, 110, 255);
+ border: none;
+ border-radius: 30px;
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+ padding: 1%;
+}
+.configure-box .inner-box .button-grey{
+ border: none;
+ border-radius: 30px;
+ padding: 1%;
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+ background-color: rgb(33, 34, 35);
+}
+.configure-box .inner-box .select-menu{
+  padding: 0.7%;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+ }
+.configure-box .inner-box .button-grey:hover{background-color: rgb(30, 30, 31);}
+.configure-box .inner-box .button-blue:hover{ background-color: rgb(5, 98, 219);}
+.configure-box .inner-box .input{
+    padding: 1% 2%;
+    border-radius: 10px;
+    border: none;
+    color: rgb(176, 171, 171);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.configure-box .inner-box .token{
+  color: #1d8cf4;
+  cursor:pointer;
+}
+.transparent{
+    background-color: transparent;
+}
+.table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: transparent;
+}
+.table td, .table th {
+  border: 1px solid rgb(34, 34, 34);
+  padding: 8px;
+}
+.table tr:nth-child(even){background-color: #f2f2f2;}
+.table tr:hover {background-color: #ddd;}
+.table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #212221;
+  color: white;
+}
+.create-new-button{
+ float:right;
+ background-color:rgb(41, 40, 40);
+ border: none;
+ box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+ border-radius: 30px;
+ padding: 1% 1%;
+}
+.create-new-button:hover{background-color:rgb(26, 25, 25)}
+.create-send-button{
+ float: right;
+ padding: 1%;
+ box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+ border-radius: 10px;
+ border: none;
+ background-color:#212221;
+ margin-left: 4px;
+ margin-right: 10px;
+ cursor: pointer;
+}
+.create-send-button:hover{background-color: rgb(14, 13, 13);}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #272626;  
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(30, 30, 30);
+}
+@media screen and (max-width: 600px) {
+  .indexhtml{
+    z-index: 1;
+    margin-left: 0px;
+    padding: 1px 0px;
+  }
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= settings.panelinfo.name || "Dolphin" %> - <% if(os) { %> Edit to Os <% } else { %> Create Os <% } %></title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="stylesheet" href="/admin/panel.css">
+    <link rel="stylesheet" href="/admin/os.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<%- include("../../partials/navigation.ejs") %>
+<%- include("../../partials/sidebar.ejs") %>
+<div class="indexhtml">
+<h1>Os<small style="font-size:20px"> <% if(os) { %> Edit to os <% } else { %> Create os <% } %></small></h1>
+<div class="configure-box">
+<div class="name-box" style="background-color: rgb(41, 38, 38);">
+ <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;"><% if(os) {%><a id="editosname" class="transparent"><%= os.name %></a><%}%> Os</h3>
+</div><br><br><br>
+<div class="inner-box">
+    <form action="/api/os/add" id="addosform" method="post">
+        <h3>Name</h3>
+        <% if(os) { %>
+            <input class="input" style="width: 25%;" type="name" name="osname" value="<%= os.name %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 25%;" type="name" name="osname" placeholder="Windows Server 2012 R2" required>
+        <% } %>
+        <h3>Description</h3>
+        <% if(os) { %>
+            <input class="input" style="width: 50%;" name="description"  value="<%= os.description %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 50%;" name="description" placeholder="Simple create Windows Server 2012" required>
+        <% } %>
+        <br><h2>About the Os</h2>
+        <h3>Username</h3>
+        <% if(os) { %>
+            <input class="input" style="width: 50%;" name="info-username"  value="<%= os.info.username %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 50%;" name="info-username" placeholder="Os Username" required>
+        <% } %>
+        <h3>Password</h3>
+        <% if(os) { %>
+            <input class="input" style="width: 50%;" name="info-password"  value="<%= os.info.password %>" required>
+        <% } else { %> 
+            <input class="input" style="width: 50%;" name="info-password" placeholder="Os Password" required>
+        <% } %>
+		        
+        <h3>Use Vnc</h3>
+        <% if(os && os.vnc) { %>
+		<input type="checkbox" class="checkbox" name="vnc" checked>
+        <% } else { %>
+        <input type="checkbox" class="checkbox" name="vnc">
+        <% } %>
+        <h3>Port Type</h3>
+        <% if(os) { %>
+   <% if(os.type == "windows") { %>
+    <select class="select-menu" name="ostype">
+        <option value="windows">Windows</option>
+        <option value="linux">Linux</option>
+        <option value="">Dont use main port</option>
+    </select>
+    <% } else if(os.type == "linux") { %>
+        <select class="select-menu" name="ostype">
+            <option value="linux">Linux</option>
+            <option value="windows">Windows</option>
+            <option value="">Dont use main port</option>
+        </select>
+        <% } else { %> 
+            <select class="select-menu" name="ostype">
+                <option value="">Dont use main port</option>
+                <option value="windows">Windows</option>
+                <option value="linux">Linux</option>
+            </select>
+        <% }} else { %>
+            <select class="select-menu" name="ostype">
+                <option value="windows">Windows</option>
+                <option value="linux">Linux</option>
+                <option value="">Dont use main port</option>
+            </select>
+            <% } %>
+            <br>      
+        <h3>Disks</h3>
+   <a class="transparent">
+    Disk name: must be with the extension example x.img<br>
+    Source: link or mb should be written example http://x.img or 2048<br>
+    Resize: change downloaded file to mb<br>
+    Force type: change file extension example x.qcow2<br>
+   </a><br><br>
+   <a id="diskadd" class="createdisk" >Create a new Disk</a>
+   <script>var addosdb = new Map();</script>
+        <% if(os) { %> 
+            <div id="disks" style="background-color: transparent;"><br><br>
+            <% for (var i = 0; i < os.disks.length; i++) { %>  
+                <script>
+                    if(!addosdb.get("disksize")) addosdb.set("disksize",0)
+                    addosdb.set("disksize",Number(addosdb.get("disksize"))+1)
+                </script>        
+            <div id="disk-<%=i+1%>" class="disk">
+                <button class='create-send-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
+               <% if(i === 0) { %>
+                This is the main disk<br><br>
+                <% } %>
+                <a>Disk name:</a>
+                <input class="input" style="width: 15%;" name="name" type="name" value="<%=os.disks[i].name%>" required>
+                <br><br>
+                <a>Source:</a>
+                <input class="input" style="width: 25%;" name="source" type="name" value="<%=os.disks[i].url || os.disks[i].size %>" required>
+                <br><br>
+                <a>Resize:</a>
+                <input class="input" style="width: 15%;" name="resize" type="name" value="<%=os.disks[i].resize%>">
+                <br><br>
+                <a>Force type:</a>
+                <input class="input" style="width: 15%;" name="forcetype" type="name" value="<%=os.disks[i].forcetype%>">
+                </div><a style="background-color:transparent;" id="disk-br-<%=i+1%>"><br><br></a> 
+                <% } %>   
+            </div>
+        <% } else { %> 
+            <div id="disks" style="background-color: transparent;"><br><br></div>
+        <% } %>
+<br><% if(os) { %><input type="submit" value="Edit to Os" class="create-send-button" >
+<a id="deleteos" class="create-send-button" style="padding:0.9%" href="/api/os/remove/<%= os.name %>">Delete Os</a>
+ <% } else { %><input type="submit" value="Create Os" class="create-send-button" > <% }  %>
+        <br><br>
+        <a class="transparent" id="status"></a>
+    </form>
+
+
+</div>
+</div><br>
+
+<script src="/admin/addos.js"></script>
+</div></body></html>

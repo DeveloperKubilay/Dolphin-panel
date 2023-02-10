@@ -1,0 +1,12 @@
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
+input[type=number] {-moz-appearance: textfield;}
+.configure-box .inner-box .sendbutton{
+ border: none;
+ background-color: rgb(33, 34, 35);
+ border-radius: 10px;padding: 0.9%;
+ -webkit-user-select: none;       
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+}
+.configure-box .inner-box .sendbutton:hover{background-color: rgb(30, 30, 31);}

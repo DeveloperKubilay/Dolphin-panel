@@ -1,0 +1,29 @@
+body{
+background-color: black;
+overflow:hidden;
+font-family: sans-serif;
+}
+.box{
+z-index:1;
+background-color: rgb(23, 22, 22);
+position:fixed;
+top:25%;
+left:25%;
+margin:0 auto;
+color:#ddd;
+padding:3%;
+border-radius:10%;
+text-align:center;
+}
+.dolphintext{
+color: rgb(112, 111, 111);
+cursor:pointer;
+text-decoration:none;
+}
+@media screen and (max-width: 600px) {
+.box{
+padding:1%;
+left:22%;
+font-size:75%;
+}
+}
