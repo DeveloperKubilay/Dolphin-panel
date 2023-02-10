@@ -136,7 +136,7 @@ if(passworddb) document.querySelector("#systemspassword").innerHTML = "Password:
 }
 if(msg.info && msg.info.ngrok) {
   ngrokurl = msg.info.ngrok
-  document.querySelector("#ngrok").innerHTML = "Ngrok: "+msg.info.ngrok
+  document.querySelector("a.buttonngrok").innerHTML = "Ngrok: "+msg.info.ngrok
 }
 if(msg.notrunning) {
   document.querySelector("#systemstatus").style["background-color"] = ""
