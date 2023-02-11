@@ -34,7 +34,7 @@ json.gillsocket = Number(await question("Which gillsocket would you like to use 
 json.ip = await question("What is the ip address for example (http://localhost):","http://localhost")
 json.sessionsecret = await question("What is your session secret:",(Math.random() + 1).toString(36).substring(2))
 json.owner.mail = await question("Email of the owner of the server:",true)
-json.owner.password = await question("Password of the owner of the server:",true)
+json.owner.password = await question("Password of the owner of the server (Enter at least 6 characters or you must change the settings.json):",true)
 if(ify(await question("Do you want the registration system Y/N recommended(Y):"))){
 json.register.status = true;
 json.register.time = await question("How long does the limit:",86400000)
