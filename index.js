@@ -552,7 +552,7 @@ serversdb.get(req.params.id+"-server").owner != req.session.settings.mail) retur
    settings: settings,
    os:osdb.get("os"),
    machine:serversdb.get(req.params.id+"-server"),
-   socketio:settings.ip+":"+settings.gillsocket,
+   socketio:settings.socketip,
    userinfo:req.session.settings.owner || req.session.settings,
    admin:req.session.usertype === 'admin'
   })
