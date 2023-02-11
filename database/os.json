@@ -1,0 +1,172 @@
+{
+  "os": [
+    {
+      "name": "Ubuntu 22.10",
+      "description": "Simple install ubuntu 22.10",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/kinetic/current/kinetic-server-cloudimg-amd64.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "name": "Ubuntu 22",
+      "description": "Simple install ubuntu 22.04",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "name": "Ubuntu 20",
+      "description": "Simple install ubuntu 20.04",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "name": "Ubuntu 18",
+      "description": "Simple install ubuntu 18.04",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "name": "Ubuntu 16",
+      "description": "Simple install ubuntu 16.04",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    },
+    {
+      "name": "Ubuntu 14",
+      "description": "Simple install ubuntu 14.04.5",
+      "vnc": "",
+      "type": "linux",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
+    }
+  ]
+}
