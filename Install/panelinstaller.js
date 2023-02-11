@@ -35,11 +35,11 @@ json.ip = await question("What is the ip address for example (http://localhost):
 json.sessionsecret = await question("What is your session secret:",(Math.random() + 1).toString(36).substring(2))
 json.owner.mail = await question("Email of the owner of the server:",true)
 json.owner.password = await question("Password of the owner of the server (Enter at least 6 characters or you must change the settings.json):",true)
-if(ify(await question("Do you want the registration system Y/N recommended(Y):"))){
+if(ify(await question("Do you want the registration system Y/N recommended(Y):","Y"))){
 json.register.status = true;
 json.register.time = await question("How long does the limit:",86400000)
 }
-if(ify(await question("Do you want the Dolphin panel to have its own Ddos protection Y/N recommended(Y):"))){
+if(ify(await question("Do you want the Dolphin panel to have its own Ddos protection Y/N recommended(Y):","Y"))){
 json.ddosprotect.status = true;
 json.ddosprotect.limit = await question("What is the number of limit:",30)
 json.ddosprotect.time = await question("How long does the limit:",1000)
