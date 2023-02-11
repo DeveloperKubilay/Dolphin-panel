@@ -31,7 +31,7 @@ if(s == "Y" || s == "y" || s == "yes" || s == "Yes") {return true;}else {return 
 install();async function install(){
 json.port = Number(await question("Which port would you like to use recommended(80):",80))
 json.gillsocket = Number(await question("Which gillsocket would you like to use recommended(8080):",8080))
-json.ip = await question("What is the ip address for example (http://localhost):","http://localhost")
+json.socketip = await question("What is the ip address for example (http://localhost:"+json.gillsocket+"):","http://localhost:"+json.gillsocket)
 json.sessionsecret = await question("What is your session secret:",(Math.random() + 1).toString(36).substring(2))
 json.owner.mail = await question("Email of the owner of the server:",true)
 json.owner.password = await question("Password of the owner of the server (Enter at least 6 characters or you must change the settings.json):",true)
