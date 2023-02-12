@@ -7,3 +7,8 @@ You must download at least 10 versions of qemu and nodejs, then you can install 
 
 If you need support, you can contact us on Discord.
 https://discord.gg/4Xpwwz6pgN
+
+As an extra, you can also install it this way on linux, only if you use the terminal;
+wget https://github.com/DeveloperKubilay/Dolphin-panel/archive/refs/heads/main.zip
+unzip main.zip
+sudo sh Dolphin-panel-main/Install/panelinstall.sh
