@@ -5,7 +5,7 @@ Designed for users<br>
 User-specific interfaces and you can easily manage servers as an Admin.<br>
 
 Support: https://discord.gg/4Xpwwz6pgN<br>
-Docs: https://dolphin-panel.gitbook.io/index/ <br>
+Docs: https://dolphin-panel.gitbook.io <br>
 Links:<br>
 https://github.com/DeveloperKubilay/Dolphin-panel <br>
 https://github.com/DeveloperKubilay/Doplin-Gills <br>
