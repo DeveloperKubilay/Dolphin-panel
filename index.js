@@ -67,7 +67,7 @@ io.to(panelusersdb.filter(z=> z.url === url)[0].socket).emit("panelusers",{kicke
 if(panelusersdb.filter(z=> z.url === url).length > 7 ) {return next(new Error("You're logging in from so many places"))}
 panelusersdb.push({url:url,socket:socket.id,mail:socket.handshake.auth.mail });return next();}//Users
 if(socket.handshake.auth.type === "gills" && gillsdb.get("gills").filter(z=>z.token === socket.handshake.auth.token).length) {//Gills
-if(gillsdb.get("gills").filter(z=>z.token === socket.handshake.auth.token)[0].ip != url) return next(new Error("Token invalid"))
+if(gillsdb.get("gills").filter(z=>z.token === socket.handshake.auth.token)[0].ip != url) return next(new Error("Token invalid"))//Ip check
 onlineallgills = onlineallgills.filter(z=> z.url != url);onlineallgills.push({url:url,socket:socket.id,date:Date.now()})
 next()} else {next(new Error("Token invalid"))}})
 io.on('connection', function(socket){
