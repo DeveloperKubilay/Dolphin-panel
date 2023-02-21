@@ -19,7 +19,7 @@ try{var edit = document.querySelector("#editservername").innerHTML} catch{ var e
 if(!id || !edit && ejs.server[id+"-server"]) return err("Please enter server name or add a non-existent server name")
 if(!ram || isNaN(Number(ram))) return err("Please enter number in ram in mb")
 if(!cpu || isNaN(Number(cpu))) return err("Please enter number in cpu in mb")
-if(ngrok && ngrok.length <= 48) return err("Your Ngrok token is incorrect")
+if(ngrok && ngrok.length <= 45) return err("Your Ngrok token is incorrect")
 if(!edit && !gill || !edit && !ejs.gills.gills.filter((z)=>z.ip === gill).length) return err("Please add an existing gill");
 if(!edit && !os || !edit && !ejs.os.filter((z)=>z.name === os).length) return err("Please add an existing os");
 if(!owner || !ejs.users.users.filter((z)=>z.mail === owner).length) return err("Please add an existing owner");
