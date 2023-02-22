@@ -7,7 +7,8 @@ var json = {
 "panelinfo":{"version":version,"apikey":(Math.random() + 1).toString(36).substring(2)},
 "posttojson":{"limit": "3","parameter": 20000},
 "ddosprotect":{"status": false,"limit":30,"time":10000,"removeban":600000},
-"socketprotect":{"limit": 9,"time": 10000}
+"socketprotect":{"limit": 9,"time": 10000},
+"socketipchange":false
 }
 process.title = "Dolphin Panel Installer"
 
@@ -37,6 +38,7 @@ json.sessionsecret = await question("What is your session secret:",(Math.random(
 json.owner.mail = await question("Email of the owner of the server:",true)
 json.owner.password = await question("Password of the owner of the server (You must enter at least 6 digits):",true)
 if((json.owner.password).length < 6) return install()
+if(ify(await question("Can change Gill socket ip recommended(N):","N"))) json.socketipchange = true;
 if(ify(await question("Do you want the registration system Y/N recommended(Y):","Y"))){
 json.register.status = true;
 json.register.time = await question("How long does the limit:",86400000)
