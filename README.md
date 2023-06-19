@@ -10,5 +10,5 @@ Tutorial: https://youtu.be/XTg2BHs1qGE <br>
 If you have errors or to learn how to add os: https://youtu.be/DpweQiVHy-Y <br>
 Links:<br>
 https://github.com/DeveloperKubilay/Dolphin-panel <br>
-https://github.com/DeveloperKubilay/Doplin-Gills <br>
+https://github.com/DeveloperKubilay/Dolphin-Gills <br>
 https://github.com/DeveloperKubilay/LocalStorageServer <br>
