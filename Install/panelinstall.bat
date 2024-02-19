@@ -4,32 +4,23 @@ cls
 echo ------------------------------------
 echo WELCOME TO DOLPHIN PANEL SETUP
 echo ------------------------------------
-set /p winlater="If you are using Windows 10 or Windows Server 2019 or Later, do you have to install nodejs automatically? Y/N: "
-set /p nodejsinstall="Do you want to download normally (If you said yes, you don't need to say it again.) Y/N: "
+set /p winlater="Do you have node js installed on your computer? Y/N: "
 
-if "%winlater%" == "y" (
-winget install --id=OpenJS.NodeJS.LTS  -e
-) else if "%winlater%" == "Y" (
-winget install --id=OpenJS.NodeJS.LTS  -e
-) else if "%winlater%" == "Yes" (
-winget install --id=OpenJS.NodeJS.LTS  -e
-) else if "%winlater%" == "yes" (
-winget install --id=OpenJS.NodeJS.LTS  -e
-) else if "%nodejsinstall%" == "y" (
+if "%winlater%" == "n" (
+echo Node js must be installed on your computer. If not, install it.
 start https://nodejs.org/en/download/
-echo After installing please press a button
 pause
-) else if "%nodejsinstall%" == "Y" (
+) else if "%winlater%" == "N" (
+echo Node js must be installed on your computer. If not, install it.
 start https://nodejs.org/en/download/
-echo After installing please press a button
 pause
-) else if "%nodejsinstall%" == "yes" (
+) else if "%winlater%" == "No" (
+echo Node js must be installed on your computer. If not, install it.
 start https://nodejs.org/en/download/
-echo After installing please press a button
 pause
-) else if "%nodejsinstall%" == "Yes" (
+) else if "%winlater%" == "no" (
+echo Node js must be installed on your computer. If not, install it.
 start https://nodejs.org/en/download/
-echo After installing please press a button
 pause
 )
 
