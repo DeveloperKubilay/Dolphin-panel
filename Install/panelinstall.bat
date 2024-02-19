@@ -25,6 +25,6 @@ pause
 )
 
 cls
-node panelinstaller.js
+node ./panelinstaller.js
 cd ..
 npm install && cls && npm start
