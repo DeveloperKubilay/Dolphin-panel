@@ -72,16 +72,6 @@
   font-family: var(--font-family);
 }
 
-body {
-  background-color: var(--background);
-  color: var(--text);
-  font-family: var(--font-family);
-  line-height: 1.5;
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background-color var(--transition-normal);
-}
-
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
@@ -111,6 +101,10 @@ a {
   color: var(--primary-light);
   text-decoration: none;
   transition: color var(--transition-fast);
+}
+
+a:hover, a:focus, a:active, a:visited {
+  text-decoration: none;
 }
 
 a:hover {

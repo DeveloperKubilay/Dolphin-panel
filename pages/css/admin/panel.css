@@ -35,6 +35,11 @@
   color: var(--admin-text);
 }
 
+/* Tüm bağlantılar için alt çizgiyi kaldır */
+a, a:hover, a:focus, a:active, a:visited {
+  text-decoration: none;
+}
+
 body {
   background-color: var(--admin-bg);
   background-image: 
@@ -252,7 +257,7 @@ body {
 
 .configure-box .inner-box .token:hover {
   color: var(--admin-primary-light);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Table styling */

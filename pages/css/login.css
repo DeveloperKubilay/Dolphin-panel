@@ -147,7 +147,7 @@ body {
 
 .link:hover {
   color: #818cf8;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .login-res-text {

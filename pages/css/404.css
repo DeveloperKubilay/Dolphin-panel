@@ -95,6 +95,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   border: 2px solid #10b981;
+  text-decoration: none;
 }
 
 /* Animations */

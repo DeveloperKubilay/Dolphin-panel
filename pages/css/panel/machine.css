@@ -64,6 +64,11 @@ body {
 /* Base elements */
 a, h1, h2, h3, div {
   background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover, a:focus, a:active {
+  text-decoration: none;
 }
 
 #dolphinpaneltext {
