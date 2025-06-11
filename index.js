@@ -1,6 +1,4 @@
 /** Welcome to Dolphin panel
- * Discord server: https://discord.gg/4Xpwwz6pgN
- * Discord: kubi#5443
  * Github: https://github.com/DeveloperKubilay/Dolphin-panel
 */
 

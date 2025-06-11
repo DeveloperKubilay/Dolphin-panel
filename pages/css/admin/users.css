@@ -1,7 +1,269 @@
-.search{
- float: right;
- padding: 1% 2%;
- border-radius: 10px;
- border: none;
- color: rgb(112, 111, 111);
+/* User management page styles */
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.users-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.users-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  float: right;
+}
+
+.search {
+  padding: 0.625rem 1rem;
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-md);
+  color: var(--admin-text);
+  transition: all var(--admin-transition);
+  width: 250px;
+  margin-right: 0.5rem;
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--admin-primary);
+  border: none;
+  padding: 0.625rem 1rem;
+  border-radius: var(--admin-radius-md);
+  cursor: pointer;
+  color: white;
+  transition: all var(--admin-transition);
+  font-weight: 500;
+}
+
+.search-btn:hover {
+  background-color: var(--admin-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* User cards view */
+.user-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.user-card {
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--admin-shadow-md);
+  transition: transform var(--admin-transition), box-shadow var(--admin-transition);
+}
+
+.user-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.user-card-header {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.user-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--admin-surface);
+}
+
+.user-info {
+  flex-grow: 1;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.user-email {
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+  margin: 0;
+}
+
+.user-card-body {
+  padding: 1.5rem;
+}
+
+.user-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.user-meta-item {
+  text-align: center;
+}
+
+.user-meta-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.user-meta-label {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.user-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.user-action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--admin-radius-md);
+  font-size: 0.875rem;
+  transition: all var(--admin-transition);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-edit {
+  background-color: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.btn-edit:hover {
+  background-color: #334155;
+}
+
+.btn-delete {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.btn-delete:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* User form */
+.user-form {
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--admin-shadow-md);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--admin-text);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-md);
+  color: var(--admin-text);
+  transition: all var(--admin-transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  margin-top: 0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-status {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.status-success {
+  color: #10b981;
+}
+
+.status-error {
+  color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .users-actions {
+    width: 100%;
+  }
+  
+  .search-container {
+    width: 100%;
+  }
+  
+  .search {
+    width: 100%;
+  }
+  
+  .user-cards {
+    grid-template-columns: 1fr;
+  }
 }

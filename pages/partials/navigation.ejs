@@ -1,80 +1,196 @@
 <style>
-.navbar{
- border-radius: 10px;
- background-color: rgb(23, 22, 22);
- margin: auto;
- left: 0;
- top: 0;
- width: 99%;
- z-index: 2;
- padding: 1px 7px;
- position: fixed;
+:root {
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 80px;
+  --transition-normal: 0.3s ease;
+  --transition-fast: 0.2s ease;
+  --surface: #161617;
+  --surface-light: #1e1e22;
+  --text: #ffffff;
+  --text-light: #b0b0b0;
+  --primary: #007bff;
+  --primary-light: #66b3ff;
+  --danger: #ff3860;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
 }
-img{background-color: rgb(23, 22, 22);}
-a.right{
-float: right;
-font-size: 120%;
-padding: 5px 5px;
-background-color: rgb(23, 22, 22);
-padding: 0.5%;
-margin-top: 1%;
+.navbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-width);
+  right: 0;
+  height: 70px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--surface-light);
+  z-index: 40;
+  transition: left var(--transition-normal);
 }
-a.right:hover{
-border-radius: 5px;
-background-color: rgb(58, 58, 58);
-cursor: pointer;
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--space-lg);
 }
-a.right:hover img{
-background-color: rgb(58, 58, 58);
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
 }
-h2{
- background-color: rgb(23, 22, 22);
- padding: 0;
- display: inline-block;
+
+.sidebar-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
 }
-h2.right{
-float: right;
-font-size: 120%;
-position: relative;
-padding: 5px 5px;
+
+.sidebar-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text);
+  margin: 5px 0;
+  transition: all var(--transition-fast);
 }
-h2.right:hover{
-border-radius: 5px;
-background-color: rgb(58, 58, 58);
-cursor: pointer;
+
+.navbar-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
 }
-h2.right:hover img{
-background-color: rgb(58, 58, 58);
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
 }
-@media screen and (max-width: 350px) {
-.navbar{
-    width: 95%;
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
-h2{
-    font-size: 80%;   
+
+.navbar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-light);
 }
-h2.right{
-    font-size: 80%;
+
+.navbar-username {
+  color: var(--text);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
 }
+
+.navbar-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-light);
+  color: var(--text);
+  transition: background-color var(--transition-fast);
 }
-@media screen and (max-width: 600px) {
-.navbar{
-    width: 95%;
+
+.navbar-logout:hover {
+  background-color: var(--danger);
 }
-h2{
-    font-size: 90%;   
+
+.icon-logout {
+  background: url("/panel/logout.png") no-repeat center center;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
 }
-h2.right{
-    font-size: 85%;
-}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .navbar {
+    left: var(--sidebar-collapsed-width);
   }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    left: 0;
+  }
+  
+  .sidebar-toggle {
+    display: block;
+  }
+  
+  .navbar-content {
+    padding: 0 var(--space-md);
+  }
+  
+  .navbar-username {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: var(--font-size-lg);
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 </style>
 <div class="navbar">
-<h2><%= settings.panelinfo.name || "Dolphin" %></h2>
-<h2 class="right"><a style="background-color: transparent;" href="/logout">
- <img src="/panel/logout.png" height="20" width="25">
-</a></h2>
-<h2 class="right"><img src="/admin/admin.jpg"> <%= settings.owner.mail %></h2>
-</h2>
-
+  <div class="navbar-content">
+    <div class="navbar-left">
+      <button id="sidebar-toggle" class="sidebar-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <h2 class="navbar-title"><%= settings.panelinfo.name || "Dolphin" %></h2>
+    </div>
+    
+    <div class="navbar-right">
+      <div class="navbar-user">
+        <img src="/admin/admin.jpg" alt="Profile" class="navbar-avatar">
+        <span class="navbar-username"><%= settings.owner.mail %></span>
+      </div>
+      
+      <a href="/logout" class="navbar-logout">
+        <i class="icon-logout"></i>
+      </a>
+    </div>
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (sidebarToggle && sidebar) {
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+      });
+    }
+  });
+</script>

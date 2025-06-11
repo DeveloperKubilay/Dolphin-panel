@@ -1,0 +1,145 @@
+<div class="metric-card <%= type || 'primary' %>">
+  <div class="metric-icon">
+    <i class="icon <%= icon %>"></i>
+  </div>
+  <div class="metric-content">
+    <h3 class="metric-value"><%= value %></h3>
+    <p class="metric-label"><%= label %></p>
+  </div>
+  <% if (change) { %>
+    <div class="metric-change <%= Number(change) >= 0 ? 'positive' : 'negative' %>">
+      <span class="change-icon"><%= Number(change) >= 0 ? '▲' : '▼' %></span>
+      <span class="change-value"><%= Math.abs(change) %>%</span>
+    </div>
+  <% } %>
+</div>
+
+<style>
+.metric-card {
+  display: flex;
+  position: relative;
+  background-color: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  overflow: hidden;
+  min-width: 220px;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
+  border-radius: 4px 0 0 4px;
+}
+
+.metric-card.secondary::before {
+  background: linear-gradient(to bottom, var(--secondary), var(--secondary-dark));
+}
+
+.metric-card.accent::before {
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+}
+
+.metric-card.danger::before {
+  background: linear-gradient(to bottom, var(--danger), var(--danger-dark));
+}
+
+.metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: rgba(99, 102, 241, 0.1);
+  margin-right: var(--space-md);
+}
+
+.metric-card.secondary .metric-icon {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.metric-card.accent .metric-icon {
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.metric-card.danger .metric-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-servers {
+  background: url("/admin/servers.png") no-repeat center center;
+  background-size: contain;
+}
+
+.icon-users {
+  background: url("/admin/users.png") no-repeat center center;
+  background-size: contain;
+}
+
+.icon-settings {
+  background: url("/admin/settings.png") no-repeat center center;
+  background-size: contain;
+}
+
+.icon-os {
+  background: url("/admin/os.png") no-repeat center center;
+  background-size: contain;
+}
+
+.metric-content {
+  flex-grow: 1;
+}
+
+.metric-value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-xs) 0;
+  color: var(--text);
+}
+
+.metric-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.metric-change {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+
+.metric-change.positive {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--secondary);
+}
+
+.metric-change.negative {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.change-icon {
+  margin-right: 2px;
+}
+</style>

@@ -19,19 +19,20 @@
 <div class="name-box" style="background-color: rgb(41, 38, 38);">
  <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Servers</h3>
  
-</div><br><br><br>
+</div>
 <div class="inner-box">
-<a href="/admin/addservers" class="create-new-button">Create new</a>
-<form action="/admin/servers/search" method="post">
-  <input type="submit" value="🔎" class="create-send-button" >
-  <% if(search) { %>
-  <input class="search" name="search" value="<%= search %>">
-  <% } else { %>
-   <input class="search" name="search" placeholder="Server name">
-  <% } %>
-</form>
-<% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/servers">❌</a><% } %>
-<br><br>
+<div class="control-bar">
+  <form action="/admin/servers/search" method="post" class="search-form">
+    <% if(search) { %>
+    <input class="search" name="search" value="<%= search %>">
+    <% } else { %>
+    <input class="search" name="search" placeholder="Server name">
+    <% } %>
+    <input type="submit" value="🔎" class="create-send-button search-button">
+    <% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/servers">❌</a><% } %>
+  </form>
+  <a href="/admin/addservers" class="create-new-button">Create new</a>
+</div>
 <table class="table">
 <tr>
   <th>Server name</th>

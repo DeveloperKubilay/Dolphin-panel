@@ -1,102 +1,217 @@
-*{
-    background-color: rgb(43, 46, 52);
-    font-family: sans-serif;
-    color: #ddd;
-    font-style: normal;
-    text-decoration: none;
+:root {
+  --login-primary: #6366f1;
+  --login-primary-dark: #4f46e5;
+  --login-bg: #111827;
+  --login-card-bg: #1e293b;
+  --login-text: #f3f4f6;
+  --login-text-muted: #9ca3af;
+  --login-border: #374151;
 }
-.loginbox{
-    border-radius: 30px;
-    background-color: rgb(23, 22, 22);
-    margin: auto;
-    width: 35%;
-    padding: 20px 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.logintext-1{
-    margin-top: 3%;
-    text-align: center;
-}
-.logintext-2{
-    color: rgb(112, 111, 111);
-    text-align: center;  
-}
-.login-in-image{
-    background-color: transparent;
-    padding: 50px 10px;
-}
-.login-in-box{
-    background-color: transparent;
-    float: right;
-    width: 50%;
-    padding: 20px 10px;
-}
-.login-in-text{
-    font-size: 120%;
-    background-color: transparent;
-}
-.login-in-inbox{
-    padding: 4% 10%;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.login-in-submit{
-    padding: 4% 22%;
-    border-radius: 10px; 
-    color: #ddd;
-    background-color:rgb(0, 98, 255);
-    border: none;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.login-in-submit:hover{
-    background-color:rgb(5, 84, 210);
-    cursor: pointer;
-}
-.login-res-text{
-    background-color:transparent;
-}
-.link{
-    color:rgb(0, 149, 255);
-    background-color:transparent;
-}
-.link:hover{
-    color:rgb(0, 110, 255);
-    background-color:transparent;
-}
-@media screen and (max-width: 4824px) {.loginbox{position: relative;padding: 4% 10px;}}
-@media screen and (max-width: 1824px) {.loginbox{position: relative;width: 40%;padding: 4% 10px;}}
-@media screen and (max-width: 1424px) {.loginbox{position: relative;width: 60%;padding: 5% 10px;}}
-@media screen and (max-width: 900px) {
-    .loginbox{
-        position: relative;
-        width: 70%;
-        padding: 10% 10px;
-    }
-  }
 
-@media screen and (max-width: 600px) {
-    .loginbox{
-        margin: auto;
-        position: relative;
-        width: 70%;
-        padding: 90% 10px;
-    }
-    .login-in-box{
-        float: left;
-        width: 50%;
-        padding: 1px 15px;
-        position: relative;
-    }
-    .login-in-image{
-        position: relative;
-        margin-top:-100%
-    }
-    .logintext-1{
-        font-size:150%;
-    }
-    .logintext-2{
-        font-size:100%;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--login-bg);
+  background-image: 
+    radial-gradient(at 47% 33%, hsla(228, 75%, 5%, 1) 0, transparent 59%), 
+    radial-gradient(at 82% 65%, hsla(218, 88%, 10%, 1) 0, transparent 55%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--login-text);
+}
+
+.logintext-1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(90deg, #6366f1, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loginbox {
+  background-color: var(--login-card-bg);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.loginbox::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #6366f1, #10b981);
+}
+
+.login-in-image {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 41, 59, 0.8);
+}
+
+.login-in-image img {
+  max-width: 70%;
+  height: auto;
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+}
+
+.login-in-box {
+  flex: 1;
+  padding: 3rem 2rem;
+  background-color: transparent;
+}
+
+.login-in-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--login-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  background-color: transparent;
+}
+
+.login-in-inbox {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #0f172a;
+  border: 1px solid var(--login-border);
+  border-radius: 0.5rem;
+  color: var(--login-text);
+  font-size: 1rem;
+  transition: all 150ms ease;
+  margin-bottom: 1.5rem;
+}
+
+.login-in-inbox:focus {
+  outline: none;
+  border-color: var(--login-primary);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.login-in-submit {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--login-primary);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.login-in-submit:hover {
+  background-color: var(--login-primary-dark);
+  transform: translateY(-2px);
+}
+
+.login-in-submit:active {
+  transform: translateY(0);
+}
+
+.link {
+  color: var(--login-primary);
+  text-decoration: none;
+  font-weight: 500;
+  background-color: transparent;
+  display: inline-block;
+  margin-top: 1rem;
+  transition: color 150ms ease;
+}
+
+.link:hover {
+  color: #818cf8;
+  text-decoration: underline;
+}
+
+.login-res-text {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.logintext-2 {
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: var(--login-text-muted);
+  text-align: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loginbox, .logintext-1, .logintext-2 {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .loginbox {
+    max-width: 700px;
   }
+}
+
+@media (max-width: 768px) {
+  .loginbox {
+    flex-direction: column;
+    max-width: 500px;
+  }
+  
+  .login-in-image {
+    padding: 2rem;
+  }
+  
+  .login-in-box {
+    padding: 2rem;
+  }
+  
+  .logintext-1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .logintext-1 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .loginbox {
+    margin: 0 1rem;
+  }
+  
+  .login-in-image {
+    padding: 1.5rem;
+  }
+  
+  .login-in-box {
+    padding: 1.5rem;
+  }
+}
 

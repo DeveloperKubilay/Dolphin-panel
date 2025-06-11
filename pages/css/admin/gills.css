@@ -1,12 +1,445 @@
-input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
-input[type=number] {-moz-appearance: textfield;}
-.configure-box .inner-box .sendbutton{
- border: none;
- background-color: rgb(33, 34, 35);
- border-radius: 10px;padding: 0.9%;
- -webkit-user-select: none;       
- -moz-user-select: none;
- -ms-user-select: none;
- user-select: none;
+/* Gills management page styles */
+.gills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
-.configure-box .inner-box .sendbutton:hover{background-color: rgb(30, 30, 31);}
+
+.gills-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.gills-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--admin-shadow-md);
+  transition: transform var(--admin-transition), box-shadow var(--admin-transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.stat-title {
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.stat-icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(99, 102, 241, 0.1);
+  border-radius: var(--admin-radius-md);
+  color: var(--admin-primary);
+}
+
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.stat-description {
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+  margin: 0;
+}
+
+/* Gills table */
+.gills-table-container {
+  overflow-x: auto;
+}
+
+.gills-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-radius-md);
+  overflow: hidden;
+  box-shadow: var(--admin-shadow-md);
+}
+
+.gills-table thead {
+  background-color: var(--admin-surface);
+}
+
+.gills-table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--admin-text);
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.875rem;
+}
+
+.gills-table td {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.875rem;
+}
+
+.gills-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.gills-table tbody tr {
+  transition: background-color var(--admin-transition);
+}
+
+.gills-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--admin-radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-indicator::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.status-active {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.status-active::before {
+  background-color: #10b981;
+}
+
+.status-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.status-warning::before {
+  background-color: #f59e0b;
+}
+
+.status-offline {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-offline::before {
+  background-color: #ef4444;
+}
+
+/* Form elements */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none; 
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Özel buton stilleri */
+.create-send-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem !important;
+  background-color: var(--admin-secondary);
+  color: white;
+  border-radius: var(--admin-radius-md);
+  font-weight: 600;
+  transition: all var(--admin-transition);
+  cursor: pointer;
+  margin: 0.5rem;
+  border: none;
+  box-shadow: var(--admin-shadow-sm);
+  font-size: 1rem;
+  width: auto; /* İçeriğe göre genişlik */
+  min-width: max-content; /* İçeriğin minimum genişliği kadar */
+  text-align: center;
+  box-sizing: border-box;
+  height: auto;
+  text-decoration: none;
+}
+
+.create-send-button:hover {
+  background-color: var(--admin-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+.configure-box .inner-box .sendbutton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1rem;
+  background-color: var(--admin-surface);
+  color: var(--admin-text);
+  border-radius: var(--admin-radius-md);
+  font-weight: 500;
+  box-shadow: var(--admin-shadow-sm);
+  border: none;
+  transition: all var(--admin-transition);
+  cursor: pointer;
+  -webkit-user-select: none;       
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.configure-box .inner-box .sendbutton:hover {
+  background-color: var(--admin-background-lighter);
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* Gills cards */
+.gill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.gill-card {
+  background-color: var(--admin-card-bg);
+  border-radius: var(--admin-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--admin-shadow-md);
+  transition: transform var(--admin-transition), box-shadow var(--admin-transition);
+}
+
+.gill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.gill-card-header {
+  background-color: var(--admin-surface);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gill-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.gill-ip {
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+  margin-top: 0.25rem;
+}
+
+.gill-card-body {
+  padding: 1.5rem;
+}
+
+.gill-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.gill-stat {
+  background-color: var(--admin-surface);
+  border-radius: var(--admin-radius-md);
+  padding: 1rem;
+  text-align: center;
+}
+
+.gill-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.gill-stat-label {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.gill-resource {
+  margin-bottom: 1rem;
+}
+
+.resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.resource-name {
+  font-size: 0.875rem;
+  color: var(--admin-text-muted);
+}
+
+.resource-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.progress-bar {
+  height: 0.5rem;
+  width: 100%;
+  background-color: var(--admin-surface);
+  border-radius: var(--admin-radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--admin-primary), var(--admin-secondary));
+  border-radius: var(--admin-radius-full);
+  transition: width 0.5s ease;
+}
+
+.progress-bar-fill.warning {
+  background: linear-gradient(90deg, var(--admin-accent), #fbbf24);
+}
+
+.progress-bar-fill.danger {
+  background: linear-gradient(90deg, var(--admin-danger), #f87171);
+}
+
+.gill-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.gill-action {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: var(--admin-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--admin-transition);
+  cursor: pointer;
+}
+
+.action-view {
+  background-color: var(--admin-primary);
+  color: white;
+}
+
+.action-view:hover {
+  background-color: var(--admin-primary-dark);
+}
+
+.action-edit {
+  background-color: var(--admin-surface);
+  color: var(--admin-text);
+}
+
+.action-edit:hover {
+  background-color: #334155;
+}
+
+/* Port chips */
+.port-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.port-chip {
+  background-color: var(--admin-surface);
+  color: var(--admin-text);
+  border-radius: var(--admin-radius-full);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  transition: all var(--admin-transition);
+  cursor: pointer;
+}
+
+.port_chip:hover {
+  background-color: var(--admin-background-lighter);
+}
+
+.port-chip-remove {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.port-chip-remove:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gills-overview {
+    grid-template-columns: 1fr;
+  }
+  
+  .gill-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gill-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .gill-card-actions {
+    flex-direction: column;
+  }
+}

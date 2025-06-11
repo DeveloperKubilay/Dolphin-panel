@@ -1,79 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= settings.panelinfo.name || "Dolphin" %> - Settings</title>
+    <title>
+        <%= settings.panelinfo.name || "Dolphin" %> - Settings
+    </title>
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="stylesheet" href="/admin/panel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
+
 <body>
-<%- include("../../partials/navigation.ejs") %>
-<%- include("../../partials/sidebar.ejs") %>
-<div class="indexhtml">
-<h1>Settings<small style="font-size:20px"> Welcome to Dolphin panel</small></h1>
+    <%- include("../../partials/navigation.ejs") %>
+        <%- include("../../partials/sidebar.ejs") %>
+            <div class="indexhtml">
+                <h1>Settings<small style="font-size:20px"> Welcome to Dolphin panel</small></h1>
 
-<div class="configure-box">
-<div class="name-box" style="background-color: rgb(41, 38, 38);">
- <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Panel Information</h3>
-</div><br><br><br>
-<div class="inner-box">
- <h3><img src="/colors/green.png" height="20" width="10" class="imgicons">You are using Dolphin version <%= settings.panelinfo.version %></h3>
- <h3 id="apikey" class="token" onclick="showapi('<%= settings.panelinfo.apikey %>')">Click to show token</h3>
- <h3>Links</h3><br>
- <a href="https://discord.gg/4Xpwwz6pgN" class="button-blue">Discord</a>
- <a href="https://github.com/DeveloperKubilay/Dolphin-panel" class="button-grey">Github</a>
- <a href="https://github.com/DeveloperKubilay/Doplin-Gills" class="button-grey">Gills</a>
-</div>
-</div><br>
+                <div class="configure-box">
+                    <div class="name-box" style="background-color: rgb(41, 38, 38);">
+                        <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Panel Information</h3>
+                    </div>
+                    <div class="inner-box">
+                        <h3><img src="/colors/green.png" height="20" width="10" class="imgicons">You are using Dolphin
+                            version <%= settings.panelinfo.version %>
+                        </h3>
+                        <h3 id="apikey" class="token" onclick="showapi('<%= settings.panelinfo.apikey %>')">Click to
+                            show token</h3>
+                        <h3>Links</h3><br>
+                        <a href="https://github.com/DeveloperKubilay/Dolphin-panel" class="button-grey">Github</a>
+                        <a href="https://github.com/DeveloperKubilay/Doplin-Gills" class="button-grey">Gills</a>
+                    </div>
+                </div><br>
 
-<div class="configure-box">
-<div class="name-box" style="background-color: rgb(41, 38, 38);">
- <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Panel Settings</h3>
-</div><br><br><br>
-<div class="inner-box">
-    <form action="/api/settings" method="post">
-    <h3>Panel name</h3>
-    <input class="input" name="panelname" value="<%= settings.panelinfo.name %>">
-    <h3>Panel port / Socket port</h3>
-    <input class="input" name="port" value="<%= settings.port %>">
-    <input class="input" name="socketport" value="<%= settings.gillsocket %>">
-    <h3>Register</h3>
-    <a class="transparent">Status:</a>  
-     <select class="select-menu" name="registerstatus">
-        <% if(settings.register.status) { %>
-        <option value="true">True</option>
-        <option value="false">False</option>
-        <% } else { %>
-            <option value="false">False</option>
-            <option value="true">True</option>
-        <% } %>
-        </select><br><br>
-    <a class="transparent">Limit time:</a>
-    <input class="input" name="registertime" value="<%= settings.register.time %>">
-    <h3>DDos protection</h3>
-    <a class="transparent">Status:</a>
-     <select class="select-menu" name="ddosstatus">
-        <% if(settings.ddosprotect.status) { %>
-        <option value="true">True</option>
-        <option value="false">False</option>
-        <% } else { %>
-            <option value="false">False</option>
-            <option value="true">True</option>
-        <% } %>
-        </select><br><br>
-        <a class="transparent">Limit for time:</a>
-        <input class="input" name="ddoslimit" value="<%= settings.ddosprotect.limit %>"><br><br>
-        <a class="transparent">Time:</a>
-        <input class="input" name="ddostime" value="<%= settings.ddosprotect.time %>"><br><br>
-        <a class="transparent">Ban remove time:</a>
-        <input class="input" name="ddosremoveban" value="<%= settings.ddosprotect.removeban %>"><br><br>
-    <h4>Settings are updated when the site is reopended</h4>
-    <input type="submit" value="Save" class="button-blue" >
-    </form>
-</div><br>
+                <div class="configure-box">
+                    <div class="name-box" style="background-color: rgb(41, 38, 38);">
+                        <h3 style="background-color: rgb(41, 38, 38);font-size: 100%;">Panel Settings</h3>
+                    </div>
+                    <div class="inner-box">
+                        <form action="/api/settings" method="post">
+                            <h3>Panel name</h3>
+                            <input class="input" name="panelname" value="<%= settings.panelinfo.name %>">
+                            <h3>Panel port / Socket port</h3>
+                            <input class="input" name="port" value="<%= settings.port %>">
+                            <input class="input" name="socketport" value="<%= settings.gillsocket %>">
+                            <h3>Register</h3>
+                            <a class="transparent">Status:</a>
+                            <select class="select-menu" name="registerstatus">
+                                <% if(settings.register.status) { %>
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                    <% } else { %>
+                                        <option value="false">False</option>
+                                        <option value="true">True</option>
+                                        <% } %>
+                            </select><br><br>
+                            <a class="transparent">Limit time:</a>
+                            <input class="input" name="registertime" value="<%= settings.register.time %>">
+                            <h3>DDos protection</h3>
+                            <a class="transparent">Status:</a>
+                            <select class="select-menu" name="ddosstatus">
+                                <% if(settings.ddosprotect.status) { %>
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                    <% } else { %>
+                                        <option value="false">False</option>
+                                        <option value="true">True</option>
+                                        <% } %>
+                            </select><br><br>
+                            <a class="transparent">Limit for time:</a>
+                            <input class="input" name="ddoslimit" value="<%= settings.ddosprotect.limit %>"><br><br>
+                            <a class="transparent">Time:</a>
+                            <input class="input" name="ddostime" value="<%= settings.ddosprotect.time %>"><br><br>
+                            <a class="transparent">Ban remove time:</a>
+                            <input class="input" name="ddosremoveban"
+                                value="<%= settings.ddosprotect.removeban %>"><br><br>
+                            <h4>Settings are updated when the site is reopended</h4><br>
+                            <input type="submit" value="Save" class="button-blue">
+                        </form>
+                    </div><br>
 
-<script src="/admin/panel.js"></script>
-</div></body></html>
+                    <script src="/admin/panel.js"></script>
+                </div>
+</body>
+
+</html>
