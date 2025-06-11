@@ -200,19 +200,19 @@ $( "#diskadd" ).click(function() {
     if(!db.get("disksize")) db.set("disksize",0)
     db.set("disksize",Number(db.get("disksize"))+1)
     $( "#disks" ).append(`
-    <div id="disk-${db.get("disksize")}" class="disk">
-    <button class='create-send-button' onclick="deletedisk('${db.get("disksize")}')" >❌</button>
+    <div id="disk-${db.get("disksize")}" class="disk" style="position: relative;">
+    <button class='create-send-button delete-disk-button' onclick="deletedisk('${db.get("disksize")}')" >❌</button>
     <a>Disk name:</a>
-    <input class="input" style="width: 15%;" name="name" type="name" placeholder="Write disk name" required>
+    <input class="input disk-input" name="name" type="name" placeholder="Write disk name" required>
     <br><br>
     <a>Source:</a>
-    <input class="input" style="width: 25%;" name="source" type="name" placeholder="Link(download) or create Disk(Mb)" required>
+    <input class="input disk-input-wide" name="source" type="name" placeholder="Link(download) or create Disk(Mb)" required>
     <br><br>
     <a>Resize:</a>
-    <input class="input" style="width: 15%;" name="resize" type="name" placeholder="Just enter mb (optional)">
+    <input class="input disk-input" name="resize" type="name" placeholder="Just enter mb (optional)">
     <br><br>
     <a>Force type:</a>
-    <input class="input" style="width: 15%;" name="forcetype" type="name" placeholder="qcow2 (optional)">
+    <input class="input disk-input" name="forcetype" type="name" placeholder="qcow2 (optional)">
     </div><a style="background-color:transparent;" id="disk-br-${db.get("disksize")}"><br><br></a>
     `);
   });
@@ -271,7 +271,7 @@ ejs.gills[x+"-database"].ports.map((x,c)=>{
 if(c==0) {
 $("#allports").innerHTML = "";
 document.querySelector("#portalert").innerText = "The first port you choose is the main port and looks red for your selection\n"+
-"If you do x-y it adds ports between and If you do x-y wrong, you may have problems with the ports.";
+"If you do x-y it adds ports between and If you do x-y wrong, you may have problems with the ports.<br><br>";
 }
 if(x.changeport) {
 $("#ports-search").append(`<a onclick="selectport(this)">${x.port}:${x.panelport}</a>`)

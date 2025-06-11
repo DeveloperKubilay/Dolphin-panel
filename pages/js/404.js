@@ -26,4 +26,4 @@ $("body").append(`<a id="h${myappends}" style="position: fixed;
     border-radius: ${random(w,40)}%;"
 ></a>`)
 setTimeout(()=>$("#h"+myappends).remove(),5000)
-},100)
+},50)

@@ -244,6 +244,7 @@
   margin-bottom: 1.5rem;
   transition: background-color var(--admin-transition);
   border: 1px solid var(--admin-border);
+  position: relative;
 }
 
 .disk:hover {

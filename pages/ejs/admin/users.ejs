@@ -21,17 +21,18 @@
  
 </div>
 <div class="inner-box">
-    <a href="/admin/adduser" class="create-new-button">Create new</a>
-    <form action="/admin/users/search" method="post">
-      <input type="submit" value="🔎" class="create-send-button" >
-      <% if(search) { %>
-      <input class="search" name="search" value="<%= search %>">
-      <% } else { %>
+    <div class="control-bar">
+      <form action="/admin/users/search" method="post" class="search-form">
+        <% if(search) { %>
+        <input class="search" name="search" value="<%= search %>">
+        <% } else { %>
         <input class="search" name="search" placeholder="admin@example.com">
         <% } %>
-</form>
-<% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/users">❌</a><% } %>
-<br><br>
+        <input type="submit" value="🔎" class="create-send-button search-button">
+        <% if(search) { %><a style="padding: 0.8%;" class="create-send-button" href="/admin/users">❌</a><% } %>
+      </form>
+      <a href="/admin/adduser" class="create-new-button">Create new</a>
+    </div>
 <table class="table">
 <tr>
   <th>ID</th>
@@ -58,7 +59,7 @@
 </table>
 
 </div>
-</div><br>
+</div>
 
 
 

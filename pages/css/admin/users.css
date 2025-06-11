@@ -33,7 +33,8 @@
   border-radius: var(--admin-radius-md);
   color: var(--admin-text);
   transition: all var(--admin-transition);
-  width: 250px;
+  width: 350px;
+  height: 48px;
   margin-right: 0.5rem;
 }
 
@@ -43,24 +44,44 @@
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
-.search-btn {
+/* Control bar for search and buttons */
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 500px;
+  height: 48px;
+}
+
+.search-button {
+  margin-left: 0.5rem;
+  height: 48px;
+  width: 52px;
+  padding: 0.625rem;
+}
+
+.search-button:hover {
+  background-color: var(--admin-secondary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* Override create-new-button styles for alignment */
+.control-bar .create-new-button {
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--admin-primary);
-  border: none;
-  padding: 0.625rem 1rem;
-  border-radius: var(--admin-radius-md);
-  cursor: pointer;
-  color: white;
-  transition: all var(--admin-transition);
-  font-weight: 500;
-}
-
-.search-btn:hover {
-  background-color: var(--admin-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--admin-shadow-md);
+  margin-bottom: 0;
+  padding: 0 1.25rem;
 }
 
 /* User cards view */
@@ -253,6 +274,21 @@
   
   .users-actions {
     width: 100%;
+  }
+  
+  .control-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-form {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .create-new-button {
+    width: 100%;
+    text-align: center;
   }
   
   .search-container {

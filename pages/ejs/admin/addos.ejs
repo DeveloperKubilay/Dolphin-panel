@@ -97,22 +97,22 @@
                     if(!addosdb.get("disksize")) addosdb.set("disksize",0)
                     addosdb.set("disksize",Number(addosdb.get("disksize"))+1)
                 </script>        
-            <div id="disk-<%=i+1%>" class="disk">
-                <button class='create-send-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
+            <div id="disk-<%=i+1%>" class="disk" style="position: relative;">
+                <button class='create-send-button delete-disk-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
                <% if(i === 0) { %>
                 This is the main disk<br><br>
                 <% } %>
                 <a>Disk name:</a>
-                <input class="input" style="width: 15%;" name="name" type="name" value="<%=os.disks[i].name%>" required>
+                <input class="input disk-input" name="name" type="name" value="<%=os.disks[i].name%>" required>
                 <br><br>
                 <a>Source:</a>
-                <input class="input" style="width: 25%;" name="source" type="name" value="<%=os.disks[i].url || os.disks[i].size %>" required>
+                <input class="input disk-input-wide" name="source" type="name" value="<%=os.disks[i].url || os.disks[i].size %>" required>
                 <br><br>
                 <a>Resize:</a>
-                <input class="input" style="width: 15%;" name="resize" type="name" value="<%=os.disks[i].resize%>">
+                <input class="input disk-input" name="resize" type="name" value="<%=os.disks[i].resize%>">
                 <br><br>
                 <a>Force type:</a>
-                <input class="input" style="width: 15%;" name="forcetype" type="name" value="<%=os.disks[i].forcetype%>">
+                <input class="input disk-input" name="forcetype" type="name" value="<%=os.disks[i].forcetype%>">
                 </div><a style="background-color:transparent;" id="disk-br-<%=i+1%>"><br><br></a> 
                 <% } %>   
             </div>
@@ -120,7 +120,7 @@
             <div id="disks" style="background-color: transparent;"><br><br></div>
         <% } %>
 <br><% if(os) { %><input type="submit" value="Edit to Os" class="create-send-button" >
-<a id="deleteos" class="create-send-button" style="padding:0.9%" href="/api/os/remove/<%= os.name %>">Delete Os</a>
+<a id="deleteos" class="create-send-button" href="/api/os/remove/<%= os.name %>">Delete Os</a>
  <% } else { %><input type="submit" value="Create Os" class="create-send-button" > <% }  %>
         <br><br>
         <a class="transparent" id="status"></a>

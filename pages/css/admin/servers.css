@@ -48,6 +48,12 @@
   padding: 0.625rem;  /* Reduced padding for better alignment */
 }
 
+.search-button:hover {
+  background-color: var(--admin-secondary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow-md);
+}
+
 /* Override create-new-button styles for alignment */
 .control-bar .create-new-button {
   height: 48px;  /* Match height with search input */

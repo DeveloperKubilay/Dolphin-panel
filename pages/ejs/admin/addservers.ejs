@@ -82,8 +82,8 @@ onkeyup="search('gill','gill-search',1)" name="gill" placeholder="select gill">
 $("#porttext").innerHTML = ""
 document.getElementById("ports").style.display = "block"
 $("#allports").innerHTML = "";
-document.querySelector("#portalert").innerText = "The first port you choose is the main port and looks red for your selection\n"+
-"If you do x-y it adds ports between and If you do x-y wrong, you may have problems with the ports.";
+document.querySelector("#portalert").innerHTML = "The first port you choose is the main port and looks red for your selection<br>"+
+"If you do x-y it adds ports between and If you do x-y wrong, you may have problems with the ports.<br><br>";
 var mainportejs = "<%= server.ports.mainport %>"
 if(mainportejs) {
 $("#allports").append(
@@ -132,7 +132,7 @@ try{document.querySelector("#allports > a:nth-child(1)").style["background-color
     Force type: change file extension example x.qcow2<br>
    </a><br><br>
    <a id="diskadd" class="createdisk" >Create a new Disk</a>
-   <div id="disks" style="background-color: transparent;"><br><br>
+   <div id="disks" style="background-color: transparent;">
 
     <script>var db = new Map();</script>
         <% if(server) { for (var i = 0; i < disks.length; i++) { %>
@@ -140,24 +140,24 @@ try{document.querySelector("#allports > a:nth-child(1)").style["background-color
     if(!db.get("disksize")) db.set("disksize",0)
     db.set("disksize",Number(db.get("disksize"))+1)
             </script>
-            <div id="disk-<%=i+1%>" class="disk">
-                <button class='create-send-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
+            <div id="disk-<%=i+1%>" class="disk" style="position: relative;">
+                <button class='create-send-button delete-disk-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
                 <a>Disk name:</a>
-                <input class="input" style="width: 15%;" name="name" type="name" value="<%=disks[i].name%>" id="diskname-<%=disks[i].name%>" required>
+                <input class="input disk-input" name="name" type="name" value="<%=disks[i].name%>" id="diskname-<%=disks[i].name%>" required>
                 <br><br>
                 <a>Source:</a>
-                <input class="input" style="width: 25%;" name="source" type="name" value="<%=disks[i].url || disks[i].size %>" required>
+                <input class="input disk-input-wide" name="source" type="name" value="<%=disks[i].url || disks[i].size %>" required>
                 <br><br>
                 <a>Resize:</a>
-                <input class="input" style="width: 15%;" name="resize" type="name" value="<%=disks[i].resize%>">
+                <input class="input disk-input" name="resize" type="name" value="<%=disks[i].resize%>">
                 <br><br>
                 <a>Force type:</a>
-                <input class="input" style="width: 15%;" name="forcetype" type="name" value="<%=disks[i].forcetype%>">
+                <input class="input disk-input" name="forcetype" type="name" value="<%=disks[i].forcetype%>">
                 </div><a style="background-color:transparent;" id="disk-br-<%=i+1%>"><br><br></a>
         <% }} %> 
     </div>
 <br><% if(server) { %><input type="submit" value="Edit to Server" class="create-send-button" >
-<a id="deleteserver" class="create-send-button" style="padding:0.9%;">Delete Server</a>
+<a id="deleteserver" class="create-send-button">Delete Server</a>
  <% } else { %><input type="submit" value="Create Server" class="create-send-button" > <% }  %>
         <br><br>
         <a class="transparent" id="status"></a>

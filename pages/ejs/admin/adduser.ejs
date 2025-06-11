@@ -35,13 +35,13 @@
         <% } %>
         <h3>Password</h3>
         <% if(user) { %>
-            <input class="input" name="password" type="password" name="password" minlength="6" value="<%= user.password %>"  required>
+            <input class="input password-input" name="password" type="password" name="password" minlength="6" value="<%= user.password %>"  required>
         <% } else { %> 
-            <input class="input" name="password" type="password" name="password" minlength="6" placeholder="123456" required>
+            <input class="input password-input" name="password" type="password" name="password" minlength="6" placeholder="123456" required>
         <% } %>
-        <% if(user) { %><div id="deleteservers" class="transparent"></div><% } %>
+        <br>
         <% if(user) { %><input type="submit" value="Edit to User" class="create-send-button" >
-<a id="deleteuser" class="create-send-button" style="padding:0.9%">Delete User</a>
+<a id="deleteuser" class="create-send-button">Delete User</a>
  <% } else { %><input type="submit" value="Create User" class="create-send-button" > <% }  %>
         <br><br><br>
         <a class="transparent" id="status"></a>

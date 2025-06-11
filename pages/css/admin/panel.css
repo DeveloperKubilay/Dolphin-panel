@@ -135,7 +135,7 @@ body {
 .configure-box .inner-box h3 {
   font-size: 1rem;
   font-weight: 500;
-  margin-top: 1.25rem;
+  margin-top: 0.75rem;
   margin-bottom: 0.5rem;
 }
 
@@ -239,6 +239,11 @@ body {
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
+/* Add password input field with extra margin */
+.configure-box .inner-box .password-input {
+  margin-bottom: 2rem; /* Increased bottom margin for more space */
+}
+
 .configure-box .inner-box .token {
   color: var(--admin-primary);
   cursor: pointer;
@@ -332,9 +337,54 @@ body {
   text-decoration: none;
   text-align: center;
   box-sizing: border-box;
-  width: auto; /* İçeriğe göre genişlik */
-  min-width: max-content; /* İçeriğin minimum genişliği kadar */
-  height: auto;
+  width: 140px; /* Fixed width instead of auto */
+  font-size: inherit; /* Ensure consistent font size */
+}
+
+/* Edit button hover effect */
+.create-send-button:hover {
+  background-color: var(--admin-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* Delete buttons style */
+[id^="delete"] {
+  background-color: rgba(239, 68, 68, 0.9);
+  width: 140px; /* Ensure consistent width with other buttons */
+  padding: 0.625rem 1.25rem; /* Standard padding */
+}
+
+/* Delete buttons hover effect */
+[id^="delete"]:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Delete button specific styles */
+.delete-disk-button {
+  width: 42px;
+  height: 42px;
+  min-width: unset;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Add disk content style */
+.disk-input {
+  width: 30% !important;
+}
+
+.disk-input-wide {
+  width: 40% !important;
 }
 
 /* Animations */

@@ -1,24 +1,23 @@
-
 $( "#diskadd" ).click(function() {
     if(!addosdb.get("disksize")) addosdb.set("disksize",0)
     addosdb.set("disksize",Number(addosdb.get("disksize"))+1)
     var maindisk = "";
     if(addosdb.get("disksize") === 1) maindisk = "This is the main disk<br><br>"
     $( "#disks" ).append(`
-    <div id="disk-${addosdb.get("disksize")}" class="disk">
-    <button class='create-send-button' onclick="deletedisk('${addosdb.get("disksize")}')" >❌</button>
+    <div id="disk-${addosdb.get("disksize")}" class="disk" style="position: relative;">
+    <button class='create-send-button delete-disk-button' onclick="deletedisk('${addosdb.get("disksize")}')" >❌</button>
     ${maindisk}
     <a>Disk name:</a>
-    <input class="input" style="width: 15%;" name="name" type="name" placeholder="Write disk name" required>
+    <input class="input disk-input" name="name" type="name" placeholder="Write disk name" required>
     <br><br>
     <a>Source:</a>
-    <input class="input" style="width: 25%;" name="source" type="name" placeholder="Link(download) or create Disk(Mb)" required>
+    <input class="input disk-input-wide" name="source" type="name" placeholder="Link(download) or create Disk(Mb)" required>
     <br><br>
     <a>Resize:</a>
-    <input class="input" style="width: 15%;" name="resize" type="name" placeholder="Just enter mb (optional)">
+    <input class="input disk-input" name="resize" type="name" placeholder="Just enter mb (optional)">
     <br><br>
     <a>Force type:</a>
-    <input class="input" style="width: 15%;" name="forcetype" type="name" placeholder="qcow2 (optional)">
+    <input class="input disk-input" name="forcetype" type="name" placeholder="qcow2 (optional)">
     </div><a style="background-color:transparent;" id="disk-br-${addosdb.get("disksize")}"><br><br></a>
     `);
   });
@@ -30,7 +29,7 @@ function deletedisk(x){try{
   if("disk-"+x === "disk-1") {
     var divs = "";
     $( "#disks" ).find("div")[0].querySelector("button").remove()
-    var text = `<button class='create-send-button' onclick="deletedisk('1')" >❌</button>This is the main disk<br><br>`
+    var text = `<button class='create-send-button delete-disk-button' onclick="deletedisk('1')" >❌</button>This is the main disk<br><br>`
     document.querySelector(`#disk-br-${$( "#disks" ).find("div")[0].id.slice($( "#disks" ).find("div")[0].id.length-1)}`).remove()
     $( "#disks" ).find("div")[0].innerHTML = text+$( "#disks" ).find("div")[0].innerHTML
     }
