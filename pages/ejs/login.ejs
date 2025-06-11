@@ -13,27 +13,29 @@
     <% if(type === "register") { %><h1 class="logintext-1">Register to Continue</h1>
        <% } else { %> <h1 class="logintext-1">Login to Continue</h1><% } %>
     <div class="loginbox">
-    <img src="/cloud.png" class="login-in-image" width="200" height="200">
-    <form class="login-in-box" id="loginform" action="/api/login/" method="post">
-        <% if(type === "register") { %>
-            <p class="login-in-text">USERNAME</p>
-            <input class="login-in-inbox" name="username" minlength="3" placeholder="example" required>    
+        <div class="image-container">
+            <img src="/cloud.png" alt="Cloud Logo">
+        </div>
+        <form class="login-in-box" id="loginform" action="/api/login/" method="post">
+            <% if(type === "register") { %>
+                <p class="login-in-text">USERNAME</p>
+                <input class="login-in-inbox" name="username" minlength="3" placeholder="example" required>    
+                <% } %>
+           <p class="login-in-text">EMAIL</p>
+            <input class="login-in-inbox" type="email" name="mail" placeholder="example@email.com" required>
+            <p class="login-in-text">PASSWORD</p>
+            <input class="login-in-inbox" type="password" name="password" minlength="6" placeholder="123456" required>
+            <br><br>
+            <% if(type === "register") { %><input type="submit" value="Register" class="login-in-submit" >
+            <% } else { %> <input type="submit" value="Login" class="login-in-submit" ><% } %>     
+            <br><br>
+            <% if(register && type === "register") { %>
+            <a  class="link" href="/">or Log in</a><br><br>
+            <% } else if(register && type === "login") { %>
+            <a class="link" href="/register">or Sign up</a><br><br>
             <% } %>
-       <p class="login-in-text">EMAIL</p>
-        <input class="login-in-inbox" type="email" name="mail" placeholder="example@email.com" required>
-        <p class="login-in-text">PASSWORD</p>
-        <input class="login-in-inbox" type="password" name="password" minlength="6" placeholder="123456" required>
-        <br><br>
-        <% if(type === "register") { %><input type="submit" value="Register" class="login-in-submit" >
-        <% } else { %> <input type="submit" value="Login" class="login-in-submit" ><% } %>     
-        <br><br>
-        <% if(register && type === "register") { %>
-        <a  class="link" href="/">or Log in</a><br><br>
-        <% } else if(register && type === "login") { %>
-        <a class="link" href="/register">or Sign up</a><br><br>
-        <% } %>
-        <a class="login-res-text" id="status"></a>
-    </form>
+            <a class="login-res-text" id="status"></a>
+        </form>
     </div>
     <h3 class="logintext-2">Dolphin Software<h3>
 <script>var type = "<%= type %>"; </script>

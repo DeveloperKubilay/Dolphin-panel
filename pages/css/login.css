@@ -48,6 +48,7 @@ body {
   display: flex;
   overflow: hidden;
   position: relative;
+  min-height: 500px;
 }
 
 .loginbox::before {
@@ -60,18 +61,21 @@ body {
   background: linear-gradient(90deg, #6366f1, #10b981);
 }
 
-.login-in-image {
+/* Resim container'ı için yeni stil */
+.image-container {
   flex: 1;
-  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(30, 41, 59, 0.8);
+  padding: 2rem;
 }
 
-.login-in-image img {
-  max-width: 70%;
+.image-container img {
+  max-width: 100%;
   height: auto;
+  max-height: 350px;
+  object-fit: contain;
   filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
 }
 
@@ -183,8 +187,13 @@ body {
     max-width: 500px;
   }
   
-  .login-in-image {
+  .image-container {
     padding: 2rem;
+    min-height: 200px;
+  }
+  
+  .image-container img {
+    max-height: 150px;
   }
   
   .login-in-box {
@@ -206,7 +215,7 @@ body {
     margin: 0 1rem;
   }
   
-  .login-in-image {
+  .image-container {
     padding: 1.5rem;
   }
   

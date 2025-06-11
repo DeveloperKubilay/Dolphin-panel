@@ -1,8 +1,8 @@
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="logo-container">
-      <img src="/admin/dolphin-logo.png" alt="Dolphin Logo" class="logo-img">
-      <h3 class="logo-text">DOLPHIN</h3>
+      <img src="/icon.png" alt="Dolphin Logo" class="logo-img">
+      <h3 class="logo-text"><%= settings.panelinfo.name || "Dolphin panel" %></h3>
     </div>
   </div>
   
@@ -79,8 +79,7 @@
         </li>
       </ul>
     </div>
-  </div>
-  
+  </div>  
   <div class="sidebar-footer">
     <div class="version-info">v<%= settings.panelinfo.version || "1.0" %></div>
   </div>
@@ -131,13 +130,11 @@
 
 .logo-text {
   font-weight: 700;
-  color: var(--text);
   font-size: var(--font-size-lg);
-  background: linear-gradient(90deg, var(--primary-light), var(--secondary-light));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white; /* Şeffaf gradient yerine beyaz renk kullanıyoruz */
+  /* Gradient ve şeffaflık özelliklerini kaldırdık */
   margin: 0;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2); /* Arka planla kontrast için hafif gölge */
 }
 
 .sidebar-content {

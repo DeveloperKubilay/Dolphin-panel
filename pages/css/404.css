@@ -64,22 +64,37 @@ body {
   margin-bottom: 2rem;
 }
 
-.dolphintext {
+.box .dolphintext {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: var(--error-accent);
-  color: white;
+  background: linear-gradient(90deg, #6366f1, #10b981);
   border-radius: 0.5rem;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1rem;
   transition: all 150ms ease;
   margin-top: 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Normal durumda gradient text efekti */
+.box .dolphintext {
+  background: linear-gradient(90deg, #6366f1, #10b981);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: 2px solid #6366f1;
+  text-shadow: none;
 }
 
 .dolphintext:hover {
-  background-color: #4f46e5;
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: linear-gradient(90deg, #10b981, #6366f1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: 2px solid #10b981;
 }
 
 /* Animations */
