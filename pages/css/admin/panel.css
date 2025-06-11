@@ -354,17 +354,17 @@ body {
 }
 
 /* Delete buttons style */
-[id^="delete"] {
-  background-color: rgba(239, 68, 68, 0.9);
+[id^="delete"], .delete-disk-button {
+  background-color: #b91c1c; /* Darker red color that matches the theme */
   width: 140px; /* Ensure consistent width with other buttons */
   padding: 0.625rem 1.25rem; /* Standard padding */
 }
 
 /* Delete buttons hover effect */
-[id^="delete"]:hover {
-  background-color: #dc2626;
+[id^="delete"]:hover, .delete-disk-button:hover {
+  background-color: #991b1b; /* Slightly darker on hover */
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 8px rgba(185, 28, 28, 0.3);
 }
 
 /* Delete button specific styles */
@@ -380,7 +380,10 @@ body {
   top: 15px;
   right: 15px;
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  line-height: 1;
 }
 
 /* Add disk content style */

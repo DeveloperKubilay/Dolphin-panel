@@ -474,6 +474,7 @@ app.get('/admin/editgill/:name', function (req, res) {
 app.post("/api/gills/add", function (req, res) {
 if(req.session.usertype != 'admin') return res.redirect('/')
 if(req.body.edit){//Edit
+  req.body.edit = req.body.edit.trim().replaceAll("\n","")
   var oldmap = gillsdb.get("gills").filter(z=> z.name === req.body.edit)[0]
   olddb = gillsdb.get(req.body.edit+"-database"),usingcpu=0,usingram=0,usingdisk=0,usingports=[],ports=[]
   gillsdb.set("gills",gillsdb.get("gills").filter(z=> z.name != req.body.edit))

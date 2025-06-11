@@ -201,7 +201,7 @@ $( "#diskadd" ).click(function() {
     db.set("disksize",Number(db.get("disksize"))+1)
     $( "#disks" ).append(`
     <div id="disk-${db.get("disksize")}" class="disk" style="position: relative;">
-    <button class='create-send-button delete-disk-button' onclick="deletedisk('${db.get("disksize")}')" >❌</button>
+    <button class='create-send-button delete-disk-button' onclick="deletedisk('${db.get("disksize")}')" >X</button>
     <a>Disk name:</a>
     <input class="input disk-input" name="name" type="name" placeholder="Write disk name" required>
     <br><br>

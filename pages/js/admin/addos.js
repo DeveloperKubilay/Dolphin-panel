@@ -5,7 +5,7 @@ $( "#diskadd" ).click(function() {
     if(addosdb.get("disksize") === 1) maindisk = "This is the main disk<br><br>"
     $( "#disks" ).append(`
     <div id="disk-${addosdb.get("disksize")}" class="disk" style="position: relative;">
-    <button class='create-send-button delete-disk-button' onclick="deletedisk('${addosdb.get("disksize")}')" >❌</button>
+    <button class='create-send-button delete-disk-button' onclick="deletedisk('${addosdb.get("disksize")}')" >X</button>
     ${maindisk}
     <a>Disk name:</a>
     <input class="input disk-input" name="name" type="name" placeholder="Write disk name" required>
@@ -29,7 +29,7 @@ function deletedisk(x){try{
   if("disk-"+x === "disk-1") {
     var divs = "";
     $( "#disks" ).find("div")[0].querySelector("button").remove()
-    var text = `<button class='create-send-button delete-disk-button' onclick="deletedisk('1')" >❌</button>This is the main disk<br><br>`
+    var text = `<button class='create-send-button delete-disk-button' onclick="deletedisk('1')" >X</button>This is the main disk<br><br>`
     document.querySelector(`#disk-br-${$( "#disks" ).find("div")[0].id.slice($( "#disks" ).find("div")[0].id.length-1)}`).remove()
     $( "#disks" ).find("div")[0].innerHTML = text+$( "#disks" ).find("div")[0].innerHTML
     }

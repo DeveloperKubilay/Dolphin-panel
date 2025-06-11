@@ -107,13 +107,13 @@ startdb = false,shutdowndb = false,resetbuttondb = false
         document.getElementById(x.name+"-processbar").style.padding = "1% "+String((Number(yuzde)-20)/2)+"%"
         document.getElementById(x.name+"-size").innerHTML = String(x.size)+extension+"/"+String(totalsize)+extension
         if(yuzde >= 90) {
-          document.getElementById(x.name+"-processbar").style["background-color"] = "#de0b0b";
+          document.getElementById(x.name+"-processbar").style["background-color"] = "#ef4444";
           } else if(yuzde >= 70) {
-          document.getElementById(x.name+"-processbar").style["background-color"] = "yellow";
-          document.getElementById(x.name+"-processbar").style.color = "black";
+          document.getElementById(x.name+"-processbar").style["background-color"] = "#f59e0b";
+          document.getElementById(x.name+"-processbar").style.color = "white";
           } else {
-          document.getElementById(x.name+"-processbar").style["background-color"] = "#05ff05";
-          document.getElementById(x.name+"-processbar").style.color = "black";
+          document.getElementById(x.name+"-processbar").style["background-color"] = "#10b981";
+          document.getElementById(x.name+"-processbar").style.color = "white";
           }
        } else {
          document.getElementById(x.name+"-size").innerHTML = String(x.size)+extension

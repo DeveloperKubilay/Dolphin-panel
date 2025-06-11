@@ -98,8 +98,8 @@
                     addosdb.set("disksize",Number(addosdb.get("disksize"))+1)
                 </script>        
             <div id="disk-<%=i+1%>" class="disk" style="position: relative;">
-                <button class='create-send-button delete-disk-button' onclick="deletedisk('<%=i+1%>')" >❌</button>
-               <% if(i === 0) { %>
+                <button class='create-send-button delete-disk-button' onclick="deletedisk('<%=i+1%>')" >X</button>
+                <% if(i === 0) { %>
                 This is the main disk<br><br>
                 <% } %>
                 <a>Disk name:</a>

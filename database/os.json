@@ -167,6 +167,34 @@
           "type": "download"
         }
       ]
+    },
+    {
+      "name": "Ubuntu 24.10",
+      "description": "Simple install ubuntu 22.10",
+      "vnc": "true",
+      "type": "windows",
+      "info": {
+        "username": "ubuntu",
+        "password": "dolphinpanel"
+      },
+      "disks": [
+        {
+          "main": "true",
+          "name": "ubuntu2.qcow2",
+          "resize": "8384",
+          "forcetype": "",
+          "url": "https://cloud-images.ubuntu.com/kinetic/current/kinetic-server-cloudimg-amd64.img",
+          "type": "download"
+        },
+        {
+          "main": "",
+          "name": "data2.img",
+          "resize": "",
+          "forcetype": "raw",
+          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
+          "type": "download"
+        }
+      ]
     }
   ],
   "Ubuntu 22.10-servers": 1
