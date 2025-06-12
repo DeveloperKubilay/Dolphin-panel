@@ -14,7 +14,7 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "kubitdb": "^1.5.0",
+    "kubitdb": "^1.5.4",
     "socket.io": "^4.5.2"
   }
 }

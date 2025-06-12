@@ -5,5 +5,3 @@ database/gills.json
 database/servers.json
 database/users.json
 package-lock.json
-
-#database/os.json   "Ubuntu 22.10-servers": 1

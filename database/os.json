@@ -1,34 +1,6 @@
 {
   "os": [
     {
-      "name": "Ubuntu 22.10",
-      "description": "Simple install ubuntu 22.10",
-      "vnc": "",
-      "type": "linux",
-      "info": {
-        "username": "ubuntu",
-        "password": "dolphinpanel"
-      },
-      "disks": [
-        {
-          "main": "true",
-          "name": "ubuntu.qcow2",
-          "resize": "8384",
-          "forcetype": "",
-          "url": "https://cloud-images.ubuntu.com/kinetic/current/kinetic-server-cloudimg-amd64.img",
-          "type": "download"
-        },
-        {
-          "main": "",
-          "name": "data.img",
-          "resize": "",
-          "forcetype": "raw",
-          "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
-          "type": "download"
-        }
-      ]
-    },
-    {
       "name": "Ubuntu 22",
       "description": "Simple install ubuntu 22.04",
       "vnc": "",
@@ -169,10 +141,10 @@
       ]
     },
     {
-      "name": "Ubuntu 24.10",
+      "name": "Ubuntu 22.10",
       "description": "Simple install ubuntu 22.10",
-      "vnc": "true",
-      "type": "windows",
+      "vnc": "",
+      "type": "linux",
       "info": {
         "username": "ubuntu",
         "password": "dolphinpanel"
@@ -180,7 +152,7 @@
       "disks": [
         {
           "main": "true",
-          "name": "ubuntu2.qcow2",
+          "name": "ubuntu.qcow2",
           "resize": "8384",
           "forcetype": "",
           "url": "https://cloud-images.ubuntu.com/kinetic/current/kinetic-server-cloudimg-amd64.img",
@@ -188,7 +160,7 @@
         },
         {
           "main": "",
-          "name": "data2.img",
+          "name": "data.img",
           "resize": "",
           "forcetype": "raw",
           "url": "https://github.com/DeveloperKubilay/LocalStorageServer/blob/main/files/example.img?raw=true",
