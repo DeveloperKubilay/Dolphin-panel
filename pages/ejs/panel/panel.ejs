@@ -1,46 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunucular - <%= settings.panelinfo.name || "Dolphin" %></title>
     <link rel="icon" type="image/png" href="/icon.png">
-	<link rel="stylesheet" href="/panel/panel.css">
+    <link rel="stylesheet" href="/panel/panel.css">
+    <link href="https://fonts.googleapis.com/css?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-    <title>Servers - <%= settings.panelinfo.name || "Dolphin" %></title>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <style>
+      /* Modern üst bar ve grid için ek stiller */
+      .navbar {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .navbar .user-mail {
+        font-weight: 600;
+        font-size: 1.1rem;
+        background: var(--panel-surface);
+        padding: 0.7rem 1.5rem;
+        border-radius: 2rem;
+        border: 1px solid var(--panel-border);
+        box-shadow: var(--panel-shadow);
+        color: var(--panel-primary);
+        letter-spacing: 0.01em;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .navbar .logout-btn {
+        background: var(--panel-danger);
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        cursor: pointer;
+        box-shadow: var(--panel-shadow);
+      }
+      .navbar .logout-btn:hover {
+        background: #b91c1c;
+      }
+      .navbar .logout-btn img {
+        width: 22px;
+        height: 22px;
+        filter: brightness(0) invert(1);
+      }
+      .panel-title {
+        font-size: 2.4rem;
+        font-weight: 800;
+        text-align: center;
+        margin: 2.5rem 0 2.5rem 0;
+        background: linear-gradient(90deg, #6366f1, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+      }
+      .panel-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 2rem 3rem 2rem;
+        box-sizing: border-box;
+      }
+      .machine-card {
+        background: var(--panel-card-bg);
+        border-radius: 1.2rem;
+        box-shadow: var(--panel-shadow);
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        border: 1.5px solid transparent;
+        transition: box-shadow 0.2s, border 0.2s, transform 0.2s;
+        cursor: pointer;
+        position: relative;
+        min-height: 180px;
+      }
+      .machine-card:hover {
+        border: 1.5px solid var(--panel-primary);
+        box-shadow: 0 8px 32px 0 rgba(99,102,241,0.18);
+        transform: translateY(-4px) scale(1.015);
+      }
+      .machine-card .machine-id {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--panel-primary);
+        margin-bottom: 0.2rem;
+        letter-spacing: 0.01em;
+      }
+      .machine-card .machine-date {
+        font-size: 0.95rem;
+        color: var(--panel-text-muted);
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        font-weight: 500;
+      }
+      .machine-card .machine-info {
+        font-size: 1.05rem;
+        color: var(--panel-text);
+        margin-top: 0.5rem;
+        font-weight: 500;
+      }
+      .machine-card .machine-ip {
+        font-size: 0.98rem;
+        color: var(--panel-secondary);
+        margin-top: 0.2rem;
+        font-weight: 600;
+      }
+      .empty-state {
+        grid-column: 1/-1;
+        text-align: center;
+        color: var(--panel-text-muted);
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding: 4rem 0;
+        opacity: 0.8;
+      }
+      .panel-statusbar {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        max-width: 1200px;
+        margin: 0 auto 0.5rem auto;
+        padding: 0 2rem;
+      }
+      .panel-statusbar .clock, .panel-statusbar .cal {
+        background: var(--panel-surface);
+        color: var(--panel-text);
+        border-radius: 0.7rem;
+        padding: 0.7rem 1.2rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        border: 1px solid var(--panel-border);
+        box-shadow: var(--panel-shadow);
+        margin: 0;
+      }
+      @media (max-width: 700px) {
+        .panel-title { font-size: 1.5rem; }
+        .panel-grid { padding: 1rem 0.5rem 2rem 0.5rem; gap: 1rem; }
+        .navbar { padding: 1rem 0.5rem 0 0.5rem; }
+        .panel-statusbar { padding: 0 0.5rem; }
+      }
+    </style>
 </head>
 <body>
-<a class="topbuttons" style="width:auto;height: auto;"><%= usersettings.mail %></a>
-<a href="/logout"><img src="/panel/logout.png" style="float:right;" class="topbuttons"></a>
-<center id="dolphinpaneltext"><%= settings.panelinfo.name || "Dolphin" %></center>
-<br>
-<div><br><br><br><br><br><br><br><br><br>
-    <a class="cal"></a><br><br><br>
-    <a class="clock"></a>
-</div>
-<div class="inhtml"><h1 id="alertbox">You dont have any machines</h1>
-</div>
-<script>
-if(JSON.parse(("<%= JSON.stringify(servers) %>").split("&#34;").join('"')).length) {
-  document.getElementById("alertbox").style.display="none"
-}
-JSON.parse(("<%= JSON.stringify(servers) %>").split("&#34;").join('"')).map((x)=>{
-$(".inhtml").append(`
-<div class="machine" onclick="window.location.href='machine/${x.id}'">
-    <a style="color:#03a5fc">${x.id}</a>
-    <a style="float:right;">${moment(Number(x.createdtime)).format("L")}</a><br><br>
-    <a>Ip:${x.ip},Cpu:${x.cpu},Ram:${x.ram}</a>
-</div><br>
-`)
-})
-try{
-document.querySelector(".cal").innerHTML = moment().format('l')
-document.querySelector(".clock").innerHTML = moment().format('LT');
-setInterval(()=>{
- document.querySelector(".cal").innerHTML = moment().format('l')
- document.querySelector(".clock").innerHTML = moment().format('LT');
-},1000)}catch{}
-</script>
+  <nav class="navbar">
+    <span class="user-mail">
+      <svg width="20" height="20" fill="none" stroke="#6366f1" stroke-width="2" style="margin-right:6px;" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="M2 6l10 7 10-7"/></svg>
+      <%= usersettings.mail %>
+    </span>
+    <a href="/logout" class="logout-btn" title="Çıkış">
+      <img src="/panel/logout.png" alt="Logout">
+    </a>
+  </nav>
+  <div class="panel-title"><%= settings.panelinfo.name || "Dolphin" %></div>
+  <div class="panel-statusbar">
+    <span class="cal"></span>
+    <span class="clock"></span>
+  </div>
+  <div class="panel-grid" id="machines-list">
+    <div class="empty-state" id="alertbox">Hiç sunucunuz yok</div>
+  </div>
+  <script>
+    // Saat ve tarih
+    function updateClock() {
+      document.querySelector(".cal").innerHTML = moment().format('l');
+      document.querySelector(".clock").innerHTML = moment().format('LT');
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Sunucu kartlarını oluştur
+    const servers = JSON.parse(("<%= JSON.stringify(servers) %>").split("&#34;").join('"'));
+    if (servers.length) document.getElementById("alertbox").style.display = "none";
+    servers.forEach(x => {
+      $("#machines-list").append(`
+        <div class="machine-card" onclick="window.location.href='machine/${x.id}'">
+          <div class="machine-id">${x.id}</div>
+          <div class="machine-date">${moment(Number(x.createdtime)).format("L")}</div>
+          <div class="machine-info">CPU: <b>${x.cpu}</b> | RAM: <b>${x.ram}</b></div>
+          <div class="machine-ip">IP: ${x.ip}</div>
+        </div>
+      `);
+    });
+  </script>
 </body>
 </html>

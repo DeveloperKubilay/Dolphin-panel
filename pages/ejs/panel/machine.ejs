@@ -5,90 +5,191 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/icon.png">
-	<link rel="stylesheet" href="/panel/machine.css">
+    <link rel="stylesheet" href="/panel/machine.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="<%= socketio %>/socket.io/socket.io.js"></script>
     <title><%= machine.id || "Server"%> - <%= settings.panelinfo.name || "Dolphin" %></title>
 </head>
 <body>
-<% if(admin) { %> 
-<a href="/admin/editservers/<%= machine.id %>"><img src="/panel/back.png" class="topbuttons"></a>
-<% } else { %> <a href="/panel"><img src="/panel/back.png" class="topbuttons"></a> <% } %>
-<a href="/logout"><img src="/panel/logout.png" style="float:right;" class="topbuttons"></a>
-<center id="dolphinpaneltext"><%= settings.panelinfo.name || "Dolphin" %></center>
-<center class="alertbox" id="alertbox"></center>
-<br>
-<div class="inhtml">
-<div class="left-bar">
- <h3>Connections</h3>
- <div id="connections">
- <% if(machine.ports.mainport){ if(machine.ports.mainport.split(':').length > 1) machine.ports.mainport = machine.ports.mainport.split(':')[1] %><div id="buttonrdpdiv">
- <a class="buttonrdp" onclick="copy('<%= machine.ip %>'+':'+'<%= machine.ports.mainport %>','Rdp')">Rdp: <%= machine.ip+":"+machine.ports.mainport %></a>
- <br><br><br></div>
- <% }if(machine.ports.vnc){ %><div id="buttonvncdiv">
- <a class="buttonvnc" onclick="copy('<%= machine.ip %>'+':'+'<%= (5900+Number(machine.ports.vnc)) %>','Vnc')">Vnc: <%= machine.ip+":"+(5900+Number(machine.ports.vnc)) %></a>
- <br><br><br></div>
- <% }if(machine.ngrok){ %>
- <a class="buttonngrok" onclick="copyngrok()">Ngrok: Not connected</a><br><br><br>
- <% } %>
- <a id="ipbutton" class="buttonip" onclick="copy('<%= machine.ip %>','Ip')">Ip: <%= machine.ip %></a></div><br><br><br>
- <h3 style="margin-top: 15%;">Disks</h3><div id="disks"></div>
- <% if(machine.ports.port && machine.ports.port.length) { %><h3>Ports</h3><% } %>
- <div class="ports">
- <% if(machine.ports.port && machine.ports.port.length) { %>
- <% for (var i = 0; i < machine.ports.port.length; i++) { %>
- <a class="button" style="width:auto;" ><%= machine.ports.port[i].panelport %></a>
- <% }} %></div>
-</div><div class="right-bar">
- <h3>System</h3>
- <a class="button" id="systemstatus"></a>
- <a class="button" id="systemsos"></a>
- <a class="button" id="systemsuser"onclick="copyusername()"></a>
- <a class="button" id="systemspassword"onclick="openpassword()">
- Click to see the password</a>
- <a class="button" id="infosystem">Cpu:<%= machine.cpu %> Core</a>
- <% if(Number(machine.ram) > 1024) { %>
- <a class="button" id="infosystem">Ram:<%= (Number(machine.ram)/1024).toFixed(0) %> Gb</a>
- <% } else { %><a class="button" id="infosystem">Ram:<%= machine.ram %> Mb</a><% } %>
-  <a class="button2"  id="infosystemlogs" href="<%= machine.id %>/logs">Logs</a>
- <br><br><br><br><br><br><br><br><br><h3 class="sa">Controls</h3>
- <a class="button2" onclick="start()" id="startbutton">Start</a>
- <a class="button2" onclick="shutdown()" id="shutdownbutton">Shutdown</a>
- <a class="button2" onclick="reset()" id="resetbutton">Reset</a>
- <a onclick="reboot()" class="button2" id="alertbutton">Reboot</a><br><br>
- <select class="selectmenu" id="selectmenu">
- <% for (var i = 0; i < os.length; i++) { %>
- <option><%= os[i].name %></option>
- <% } %>
- </select>
- <a class="button2" onclick="setup()" id="alertbutton">Install</a>
- <br><br><br><br><br><br><br>
- <div class="cpuchart">
- <h3 id="cputext"></h3>
- <canvas id="cpu-chart" class="canvas"></canvas>
- </div><br><div class="ramchart">
- <h3 id="ramtext"></h3>
- <canvas id="ram-chart" class="canvas"></canvas>
- </div>
-</div></div>
-<script>//ejs to js
- var ejs = {
- disks:JSON.parse(("<%= JSON.stringify(machine.disks) %>").split("&#34;").join('"')),
- userinfo:JSON.parse(("<%= JSON.stringify(userinfo) %>").split("&#34;").join('"')),
- createdtime:"<%= machine.createdtime %>",
- machinename:"<%= machine.id %>",
- gill:"<%= machine.ip %>",
- socket:"<%= socketio %>",
- machineid:"<%= machine.id %>"
- }
-</script>
-<% if(admin) { %><script>
-var auth = {type:"admin",admin:ejs.userinfo,name:ejs.machineid}
-</script><% } else { %><script>
-var auth = {type:"panelusers",password:ejs.userinfo.password,mail:ejs.userinfo.mail,createdtime:ejs.createdtime,name:ejs.machinename}
-</script><% } %>
-<script src="/panel/machine.js"></script>
+    <!-- Header -->
+    <div class="header">
+        <% if(admin) { %>
+            <a href="/admin/editservers/<%= machine.id %>" class="btn-icon">
+                <img src="/panel/back.png" alt="Back">
+            </a>
+        <% } else { %>
+            <a href="/panel" class="btn-icon">
+                <img src="/panel/back.png" alt="Back">
+            </a>
+        <% } %>
+        <h1 class="header-title"><%= settings.panelinfo.name || "Dolphin" %> Panel</h1>
+        <a href="/logout" class="btn-icon">
+            <img src="/panel/logout.png" alt="Logout">
+        </a>
+    </div>
+    
+    <!-- Alert Box -->
+    <div id="alertBox" class="alert-box">Alert message here</div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Connections Card -->
+            <div class="card">
+                <h2 class="card-title">Connections</h2>
+                <div id="connections">
+                    <% if(machine.ports.mainport){ 
+                        if(machine.ports.mainport.split(':').length > 1) 
+                            machine.ports.mainport = machine.ports.mainport.split(':')[1] %>
+                        <button id="btnRdp" class="connection-btn btn-rdp" onclick="copy('<%= machine.ip %>'+':'+'<%= machine.ports.mainport %>','RDP')">
+                            RDP: <%= machine.ip+":"+machine.ports.mainport %>
+                        </button>
+                    <% } if(machine.ports.vnc){ %>
+                        <button id="btnVnc" class="connection-btn btn-vnc" onclick="copy('<%= machine.ip %>'+':'+'<%= (5900+Number(machine.ports.vnc)) %>','VNC')">
+                            VNC: <%= machine.ip+":"+(5900+Number(machine.ports.vnc)) %>
+                        </button>
+                    <% } if(machine.ngrok){ %>
+                        <button id="btnNgrok" class="connection-btn btn-ngrok" onclick="copyngrok()">
+                            Ngrok: Not connected
+                        </button>
+                    <% } %>
+                    <button id="btnIp" class="connection-btn btn-ip" onclick="copy('<%= machine.ip %>','IP')">
+                        IP: <%= machine.ip %>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Disks Card -->
+            <div class="card">
+                <h2 class="card-title">Storage</h2>
+                <div id="disks">
+                    <!-- Disks will be loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Ports Card -->
+            <% if(machine.ports.port && machine.ports.port.length) { %>
+            <div class="card">
+                <h2 class="card-title">Ports</h2>
+                <div class="ports">
+                    <% for (var i = 0; i < machine.ports.port.length; i++) { %>
+                        <span class="port-badge"><%= machine.ports.port[i].panelport %></span>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- System Info Card -->
+            <div class="card">
+                <h2 class="card-title">System Information</h2>
+                <div class="system-info">
+                    <div id="systemstatus" class="status-offline">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">Offline</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Operating System</div>
+                        <div id="systemsos" class="info-value">Loading...</div>
+                    </div>
+                    <div class="info-item" onclick="copyusername()">
+                        <div class="info-label">Username</div>
+                        <div id="systemsuser" class="info-value">Loading...</div>
+                    </div>
+                    <div class="info-item" onclick="openpassword()">
+                        <div class="info-label">Password</div>
+                        <div id="systemspassword" class="info-value password">Click to view</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CPU</div>
+                        <div class="info-value"><%= machine.cpu %> Core</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">RAM</div>
+                        <div class="info-value">
+                            <% if(Number(machine.ram) > 1024) { %>
+                                <%= (Number(machine.ram)/1024).toFixed(0) %> GB
+                            <% } else { %>
+                                <%= machine.ram %> MB
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Controls Card -->
+            <div class="card">
+                <h2 class="card-title">System Controls</h2>
+                <div class="system-controls">
+                    <button id="startButton" class="control-btn btn-start" onclick="start()">Start</button>
+                    <button id="shutdownButton" class="control-btn btn-shutdown btn-disabled" onclick="shutdown()">Shutdown</button>
+                    <button id="resetButton" class="control-btn btn-reset btn-disabled" onclick="reset()">Reset</button>
+                    <button id="rebootButton" class="control-btn btn-reboot" onclick="reboot()">Reboot</button>
+                    
+                    <select id="osSelect" class="os-select">
+                        <% for (var i = 0; i < os.length; i++) { %>
+                            <option><%= os[i].name %></option>
+                        <% } %>
+                    </select>
+                    <button id="installButton" class="control-btn btn-install" onclick="setup()">Install</button>
+                </div>
+            </div>
+            
+            <!-- Logs Button -->
+            <a href="<%= machine.id %>/logs" class="card">
+                <h2 class="card-title">Server Logs</h2>
+                <p>View detailed server logs and activity</p>
+            </a>
+
+            <!-- Performance Metrics Card -->
+            <div class="card">
+                <h2 class="card-title">Performance Metrics</h2>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <h3 class="metric-title" id="cputext">CPU Usage</h3>
+                        <div class="chart-container">
+                            <canvas id="cpu-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3 class="metric-title" id="ramtext">Memory Usage</h3>
+                        <div class="chart-container">
+                            <canvas id="ram-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // EJS to JS data transfer
+        var ejs = {
+            disks: JSON.parse(("<%= JSON.stringify(machine.disks) %>").split("&#34;").join('"')),
+            userinfo: JSON.parse(("<%= JSON.stringify(userinfo) %>").split("&#34;").join('"')),
+            createdtime: "<%= machine.createdtime %>",
+            machinename: "<%= machine.id %>",
+            gill: "<%= machine.ip %>",
+            socket: "<%= socketio %>",
+            machineid: "<%= machine.id %>"
+        }
+    </script>
+    
+    <% if(admin) { %>
+    <script>
+        var auth = {type:"admin",admin:ejs.userinfo,name:ejs.machineid}
+    </script>
+    <% } else { %>
+    <script>
+        var auth = {type:"panelusers",password:ejs.userinfo.password,mail:ejs.userinfo.mail,createdtime:ejs.createdtime,name:ejs.machinename}
+    </script>
+    <% } %>
+    
+    <script src="/panel/machine.js"></script>
 </body>
 </html>
