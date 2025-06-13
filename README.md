@@ -1,14 +1,36 @@
-# Dolphin Panel
-It is the best place to manage vds panel including in user panel which is very simple to use and install vds panel working on many operating systems<br>
-To install the panel, you can open the necessary file in the Install folder.<br>
-Designed for users<br>
-User-specific interfaces and you can easily manage servers as an Admin.<br>
+# 🐬 Dolphin Panel
 
-Support: https://discord.gg/4Xpwwz6pgN<br>
-Docs: https://dolphin-panel.gitbook.io <br>
-Tutorial: https://youtu.be/XTg2BHs1qGE <br>
-If you have errors or to learn how to add os: https://youtu.be/DpweQiVHy-Y <br>
-Links:<br>
-https://github.com/DeveloperKubilay/Dolphin-panel <br>
-https://github.com/DeveloperKubilay/Dolphin-Gills <br>
-https://github.com/DeveloperKubilay/LocalStorageServer <br>
+## 📸 Screenshots
+
+
+> **The ultimate VDS management solution that just hits different.**
+
+Dolphin Panel is straight fire for managing your virtual dedicated servers with zero hassle. This panel is mad easy to use and works on basically any OS you throw at it.
+
+## ✨ What's Good About It
+
+- 💯 **User-Friendly Interface** - Simple design that anyone can figure out
+- 🔒 **Admin & User Views** - Manage everything as admin or just your own servers as a user
+- 🖥️ **Multi-OS Support** - Works with pretty much any operating system
+- 🚀 **Quick Setup** - Get your servers running in minutes not hours
+
+## 🔧 How to Get Started
+
+Just open up the files in the Install folder and follow the steps. No cap, it's that easy.
+
+## 🔗 Links & Resources
+
+- 💬 **Need Help?** Join the Discord: https://discord.gg/4Xpwwz6pgN
+- 📚 **Documentation:** https://dolphin-panel.gitbook.io
+- 🎬 **Video Tutorial:** https://youtu.be/XTg2BHs1qGE
+- 🛠️ **Troubleshooting:** https://youtu.be/DpweQiVHy-Y
+
+## 🌐 Related Projects
+
+- 🐬 [Dolphin Panel](https://github.com/DeveloperKubilay/Dolphin-panel) - Main panel
+- 🐟 [Dolphin Gills](https://github.com/DeveloperKubilay/Dolphin-Gills) - Server component
+- 💾 [LocalStorageServer](https://github.com/DeveloperKubilay/LocalStorageServer) - Storage solution
+
+---
+
+## Made with ❤️ by DeveloperKubilay
