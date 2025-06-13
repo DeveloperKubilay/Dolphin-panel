@@ -190,7 +190,7 @@ io.on('connection', function (socket) {
     if (msg.installing && msg.code.process) {
       sendsocket("all", {
         machine: msg.machine,
-        install: { process: msg.code.process, time: msg.code.time }
+        install: { process: msg.code.process }
       }, "Installing " + msg.code.text + " " + msg.code.process + "%")
     }
     if (msg.running || msg.info && msg.info.running) {

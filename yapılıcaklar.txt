@@ -1,5 +1,0 @@
-   "Ubuntu 22.10-servers": 1
-   Installing
-58% in a few seconds
-
-qemu çalışmıyor

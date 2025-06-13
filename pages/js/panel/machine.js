@@ -2,66 +2,130 @@ var cpuchart = [0.005, 0.001, 0.002, 0.003, 0.004];
 var ramchart = [0.005, 0.001, 0.002, 0.003, 0.004];
 var systemsinfo = {osname: "Loading...", user: "Loading...", password: "Loading..."};
 var timeoutdb, startdb = true, shutdowndb = false, resetbuttondb = false, resetdb, rebootdb, passworddb, ngrokurl;
+var machineStatus = 'offline';
+var chartUpdateTimer = null;
 
-// Initialize socket connection
+function isLinuxOS(osName) {
+  if (!osName) return false;
+  const lowerOsName = osName.toLowerCase();
+  return lowerOsName.includes('linux') || 
+         lowerOsName.includes('ubuntu') || 
+         lowerOsName.includes('debian') || 
+         lowerOsName.includes('centos') || 
+         lowerOsName.includes('fedora') ||
+         lowerOsName.includes('unix');
+}
+
+function getConnectionType() {
+  return isLinuxOS(systemsinfo.osname) ? "SSH" : "RDP";
+}
+
 var socket = io(("ws://" + ejs.socket).replace("http://", "").replace("https://", ""), {auth: auth, transports: ['websocket']});
 
-socket.on("connect_error", (err) => console.log(`Unable to connect to server error code: ${err.message}`));
+socket.on("connect", function() {
+  console.log("Socket bağlantısı başarılı");
+});
+
+socket.on("disconnect", function() {
+  console.log("Socket bağlantısı kesildi");
+  setSystemStatus('offline');
+  setButtonStates(true, false, false);
+  if (chartUpdateTimer) {
+    clearInterval(chartUpdateTimer);
+    chartUpdateTimer = null;
+  }
+});
+
+socket.on("connect_error", (err) => {
+  console.log(`Unable to connect to server error code: ${err.message}`);
+  setSystemStatus('offline');
+  setButtonStates(true, false, false);
+});
 
 socket.on('panelusers', function(msg) {
-  // Handle Gill closure
+  console.log("Sunucudan gelen veri:", msg);
+  
   if (msg.closegill && ejs.gill === msg.closegill) {
+    console.log("Gill kapatıldı:", msg.closegill);
     setSystemStatus('offline');
     setButtonStates(true, false, false);
     document.getElementById("systemstatus").innerHTML = `
       <div class="info-label">Status</div>
       <div class="info-value">Offline Gill</div>`;
+    return;
   }
   
-  // Handle user kicked
-  if (msg.kicked) return window.location = '/panel';
+  if (msg.kicked) {
+    console.log("Kullanıcı atıldı");
+    return window.location = '/panel';
+  }
   
-  // Verify machine
-  if (!msg.machine || msg.machine != ejs.machineid) return;
+  if (!msg.machine || msg.machine != ejs.machineid) {
+    console.log("Eşleşmeyen makine ID'si", msg.machine, ejs.machineid);
+    return;
+  }
   
-  // Handle installation process
   if (msg.install && msg.install.process) {
-    try {
-      const timeRemaining = moment().add(Number(msg.install.time), 'second').fromNow();
-      document.getElementById("systemstatus").innerHTML = `
-        <div class="info-label">Installing</div>
-        <div class="info-value">${msg.install.process}% ${timeRemaining}</div>`;
-    } catch {
-      document.getElementById("systemstatus").innerHTML = `
-        <div class="info-label">Installing</div>
-        <div class="info-value">${msg.install.process}%</div>`;
-    }
+    document.getElementById("systemstatus").innerHTML = `
+      <div class="info-label">Installing</div>
+      <div class="info-value">${msg.install.process}%</div>`;
     
     setSystemStatus('installing');
     setButtonStates(false, false, false);
+    return;
   }
   
-  // Handle machine running notification
-  if (msg.nowrunning) {
+  if (msg.nowrunning === true || (msg.info && msg.info.running === true)) {
+    console.log("Makine çalışıyor sinyali alındı");
     document.getElementById("systemstatus").innerHTML = `
       <div class="info-label">Status</div>
       <div class="info-value">Running</div>`;
     
     setSystemStatus('online');
     setButtonStates(false, true, true);
+    
+    if (!chartUpdateTimer) {
+      chartUpdateTimer = setInterval(function() {
+        updateCpuChart();
+        updateRamChart();
+      }, 5000);
+    }
+  } 
+  
+  else if (msg.notrunning === true || (msg.info && msg.info.running === false)) {
+    console.log("Makine durdu sinyali alındı");
+    document.getElementById("systemstatus").innerHTML = `
+      <div class="info-label">Status</div>
+      <div class="info-value">Offline</div>`;
+      
+    setSystemStatus('offline');
+    setButtonStates(true, false, false);
+    
+    if (chartUpdateTimer) {
+      clearInterval(chartUpdateTimer);
+      chartUpdateTimer = null;
+    }
   }
   
-  // Handle status updates with memory info
-  if (msg.status && msg.status.memory) {
-    setchart("cpu", Math.round(msg.status.cpu));
-    setchart("ram", Math.round((msg.status.memory/1024)/1024));
+  if (msg.status && msg.status.memory !== undefined) {
+    console.log("Makine detaylı durum bilgisi alındı:", msg.status);
+    
+    const cpuValue = Math.max(0, Math.round(msg.status.cpu || 0));
+    const ramValue = Math.max(0, Math.round(((msg.status.memory || 0) / 1024) / 1024));
+    
+    setchart("cpu", cpuValue);
+    setchart("ram", ramValue);
+    
+    updateCpuChart();
+    updateRamChart();
     
     try {
       const uptime = moment(Date.now() - msg.status.elapsed).fromNow();
       document.getElementById("systemstatus").innerHTML = `
         <div class="info-label">Uptime</div>
         <div class="info-value">${uptime}</div>`;
-    } catch {
+    } catch (e) {
+      console.error("Uptime calculation error:", e);
       document.getElementById("systemstatus").innerHTML = `
         <div class="info-label">Status</div>
         <div class="info-value">Running</div>`;
@@ -69,23 +133,19 @@ socket.on('panelusers', function(msg) {
     
     setSystemStatus('online');
     setButtonStates(false, true, true);
-    
-    // Update charts
-    updateCpuChart();
-    updateRamChart();
-    
-    // Update disk information
-    if (msg.info && msg.info.storage) {
-      updateDiskInfo(msg.info.storage);
-    }
   }
   
-  // Handle authentication info updates
-  if (msg.auth && msg.auth.info.password) {
+  if (msg.info && Array.isArray(msg.info.storage)) {
+    console.log("Disk bilgileri güncelleniyor:", msg.info.storage);
+    updateDiskInfo(msg.info.storage);
+  }
+  
+  if (msg.auth && msg.auth.info && msg.auth.info.password) {
+    console.log("Kimlik bilgileri güncellendi");
     systemsinfo = {
-      osname: msg.auth.osname,
-      user: msg.auth.info.username,
-      password: msg.auth.info.password
+      osname: msg.auth.osname || systemsinfo.osname,
+      user: msg.auth.info.username || systemsinfo.user,
+      password: msg.auth.info.password || systemsinfo.password
     };
     
     document.getElementById("systemsos").textContent = systemsinfo.osname;
@@ -96,33 +156,14 @@ socket.on('panelusers', function(msg) {
     }
   }
   
-  // Handle Ngrok info
   if (msg.info && msg.info.ngrok) {
+    console.log("Ngrok bilgisi güncellendi:", msg.info.ngrok);
     ngrokurl = msg.info.ngrok;
     document.getElementById("btnNgrok").textContent = "Ngrok: " + msg.info.ngrok;
   }
   
-  // Handle machine not running
-  if (msg.notrunning) {
-    document.getElementById("systemstatus").innerHTML = `
-      <div class="info-label">Status</div>
-      <div class="info-value">Offline</div>`;
-      
-    setSystemStatus('offline');
-    setButtonStates(true, false, false);
-  }
-  
-  // Handle machine status "running=false"
-  if (msg.info && msg.info.running === false) {
-    document.getElementById("systemstatus").innerHTML = `
-      <div class="info-label">Status</div>
-      <div class="info-value">Connecting...</div>`;
-      
-    setSystemStatus('offline');
-  }
-  
-  // Handle errors
   if (msg.erorr) {
+    console.error("Makine hatası alındı");
     document.getElementById("systemstatus").innerHTML = `
       <div class="info-label">Status</div>
       <div class="info-value">Error</div>`;
@@ -131,11 +172,11 @@ socket.on('panelusers', function(msg) {
     setButtonStates(true, false, false);
   }
   
-  // Handle auth updates
   if (msg.newauth) {
-    systemsinfo.osname = msg.newauth.osname;
-    systemsinfo.user = msg.newauth.info.username;
-    systemsinfo.password = msg.newauth.info.password;
+    console.log("Yeni kimlik bilgileri alındı");
+    systemsinfo.osname = msg.newauth.osname || systemsinfo.osname;
+    systemsinfo.user = msg.newauth.info.username || systemsinfo.user;
+    systemsinfo.password = msg.newauth.info.password || systemsinfo.password;
     
     document.getElementById("systemsos").textContent = systemsinfo.osname;
     document.getElementById("systemsuser").textContent = systemsinfo.user;
@@ -143,10 +184,17 @@ socket.on('panelusers', function(msg) {
     if (passworddb) {
       document.getElementById("systemspassword").textContent = systemsinfo.password;
     }
+    
+    const rdpButton = document.getElementById("btnRdp");
+    if (rdpButton) {
+      const connectionType = getConnectionType();
+      const port = rdpButton.textContent.split(":")[1].trim() + ":" + rdpButton.textContent.split(":")[2].trim();
+      rdpButton.textContent = `${connectionType}: ${port}`;
+    }
   }
   
-  // Handle VNC port updates
   if (msg.newvnc) {
+    console.log("VNC portu güncellendi:", msg.newvnc);
     var newvncip = String(5900 + Number(msg.newvnc));
     
     if (!document.getElementById("btnVnc")) {
@@ -156,57 +204,70 @@ socket.on('panelusers', function(msg) {
       vncButton.onclick = function() { copy(ejs.gill + ':' + newvncip, 'VNC'); };
       vncButton.textContent = "VNC: " + ejs.gill + ":" + newvncip;
       
-      document.getElementById("connections").appendChild(vncButton);
+      document.getElementById("connections").insertBefore(vncButton, document.getElementById("connections").firstChild);
     } else {
       document.getElementById("btnVnc").textContent = "VNC: " + ejs.gill + ":" + newvncip;
     }
   }
   
-  // Handle main port updates
   if (msg.newmainport) {
+    console.log("Ana port güncellendi:", msg.newmainport);
     if (msg.newmainport.split(':').length > 1) {
       msg.newmainport = msg.newmainport.split(':')[1];
     }
+    
+    const connectionType = getConnectionType();
     
     if (!document.getElementById("btnRdp")) {
       const rdpButton = document.createElement('button');
       rdpButton.id = "btnRdp";
       rdpButton.className = "connection-btn btn-rdp";
-      rdpButton.onclick = function() { copy(ejs.gill + ':' + msg.newmainport, 'RDP'); };
-      rdpButton.textContent = "RDP: " + ejs.gill + ":" + msg.newmainport;
+      rdpButton.onclick = function() { copy(ejs.gill + ':' + msg.newmainport, connectionType); };
+      rdpButton.textContent = `${connectionType}: ${ejs.gill}:${msg.newmainport}`;
       
-      document.getElementById("connections").appendChild(rdpButton);
+      document.getElementById("connections").insertBefore(rdpButton, document.getElementById("connections").firstChild);
     } else {
-      document.getElementById("btnRdp").textContent = "RDP: " + ejs.gill + ":" + msg.newmainport;
+      document.getElementById("btnRdp").textContent = `${connectionType}: ${ejs.gill}:${msg.newmainport}`;
     }
   }
   
-  // Handle removed connections
-  if (msg.newauth && !msg.newmainport && document.getElementById("btnRdp")) {
+  if (msg.newauth && msg.newmainport === "" && document.getElementById("btnRdp")) {
     document.getElementById("btnRdp").remove();
   }
   
-  if (msg.newauth && !msg.newvnc && document.getElementById("btnVnc")) {
+  if (msg.newauth && msg.newvnc === "" && document.getElementById("btnVnc")) {
     document.getElementById("btnVnc").remove();
   }
   
-  // Handle server deletion
-  if (msg.deletedserver) window.location = '/panel';
+  if (msg.deletedserver) {
+    console.log("Sunucu silindi, ana panele yönlendiriliyor");
+    window.location = '/panel';
+  }
 });
 
-// Initialize system status
 document.getElementById("systemsos").textContent = systemsinfo.osname;
 document.getElementById("systemsuser").textContent = systemsinfo.user;
 setButtonStates(true, false, false);
 
-// Helper functions
+setTimeout(function() {
+  console.log("İlk durum sorgusu gönderiliyor");
+  socket.emit("panelservers", { action: "status" });
+}, 1000);
+
+setInterval(function() {
+  if (machineStatus === 'online') {
+    console.log("Otomatik durum sorgusu gönderiliyor");
+    socket.emit("panelservers", { action: "status" });
+  }
+}, 15000);
+
 function setSystemStatus(status) {
   const statusElement = document.getElementById("systemstatus");
   
-  // Remove all status classes
+  machineStatus = status;
+  
   statusElement.classList.remove('status-offline', 'status-online', 'status-error', 'status-installing');
   
-  // Add appropriate class
   switch (status) {
     case 'online':
       statusElement.classList.add('status-online');
@@ -222,6 +283,7 @@ function setSystemStatus(status) {
       statusElement.classList.add('status-offline');
       break;
   }
+  console.log("Sistem durumu güncellendi:", status);
 }
 
 function setButtonStates(startEnabled, shutdownEnabled, resetEnabled) {
@@ -229,25 +291,24 @@ function setButtonStates(startEnabled, shutdownEnabled, resetEnabled) {
   const shutdownButton = document.getElementById("shutdownButton");
   const resetButton = document.getElementById("resetButton");
   
-  // Update start button
   startButton.classList.toggle('btn-disabled', !startEnabled);
   startButton.style.cursor = startEnabled ? "pointer" : "not-allowed";
   startdb = startEnabled;
   
-  // Update shutdown button
   shutdownButton.classList.toggle('btn-disabled', !shutdownEnabled);
   shutdownButton.style.cursor = shutdownEnabled ? "pointer" : "not-allowed";
   shutdowndb = shutdownEnabled;
   
-  // Update reset button
   resetButton.classList.toggle('btn-disabled', !resetEnabled);
   resetButton.style.cursor = resetEnabled ? "pointer" : "not-allowed";
   resetbuttondb = resetEnabled;
+  
+  console.log("Buton durumları güncellendi:", {start: startEnabled, shutdown: shutdownEnabled, reset: resetEnabled});
 }
 
 function updateCpuChart() {
   if (cpuchart.length) {
-    document.getElementById("cputext").textContent = "CPU Usage";
+    document.getElementById("cputext").textContent = "CPU Usage: " + cpuchart[cpuchart.length-1] + "%";
     
     new Chart("cpu-chart", {
       type: "line",
@@ -271,7 +332,8 @@ function updateCpuChart() {
           yAxes: [{
             ticks: {
               fontColor: "rgba(233, 233, 233, 0.7)",
-              beginAtZero: true
+              beginAtZero: true,
+              max: Math.max(100, ...cpuchart)
             },
             gridLines: {
               color: "rgba(233, 233, 233, 0.1)",
@@ -290,7 +352,7 @@ function updateCpuChart() {
 
 function updateRamChart() {
   if (ramchart.length) {
-    document.getElementById("ramtext").textContent = "Memory Usage";
+    document.getElementById("ramtext").textContent = "Memory Usage: " + ramchart[ramchart.length-1] + " MB";
     
     new Chart("ram-chart", {
       type: "line",
@@ -314,7 +376,8 @@ function updateRamChart() {
           yAxes: [{
             ticks: {
               fontColor: "rgba(233, 233, 233, 0.7)",
-              beginAtZero: true
+              beginAtZero: true,
+              max: Math.max(Math.max(...ramchart) * 1.2, 1)
             },
             gridLines: {
               color: "rgba(233, 233, 233, 0.1)",
@@ -332,14 +395,39 @@ function updateRamChart() {
 }
 
 function updateDiskInfo(storage) {
+  if (!Array.isArray(storage) || storage.length === 0) {
+    console.warn("Geçersiz disk bilgisi alındı:", storage);
+    return;
+  }
+
   const disksContainer = document.getElementById("disks");
   
+  const existingDiskIds = Array.from(disksContainer.children).map(el => el.id);
+  const updatedDiskIds = [];
+  
   storage.forEach(disk => {
-    if (!document.getElementById(`${disk.name}-disk`)) {
+    if (!disk || !disk.name) {
+      console.warn("Geçersiz disk verisi:", disk);
+      return;
+    }
+    
+    const diskId = `${disk.name}-disk`;
+    updatedDiskIds.push(diskId);
+    
+    if (!document.getElementById(diskId)) {
       createDiskElement(disk);
     }
     
     updateDiskElement(disk);
+  });
+  
+  existingDiskIds.forEach(id => {
+    if (!updatedDiskIds.includes(id)) {
+      const diskElement = document.getElementById(id);
+      if (diskElement) {
+        diskElement.remove();
+      }
+    }
   });
 }
 
@@ -364,67 +452,81 @@ function createDiskElement(disk) {
 }
 
 function updateDiskElement(disk) {
+  if (!disk || !disk.name || typeof disk.size === 'undefined') {
+    console.warn("Disk güncellenemedi, geçersiz veri:", disk);
+    return;
+  }
+
   var extension = "KB";
-  var diskSize = disk.size;
+  var diskSize = parseFloat(disk.size) || 0;
   var totalSize = 0;
   
   const diskFilter = ejs.disks.filter(z => z.name === disk.name);
   
   if (diskFilter.length) {
-    totalSize = Number(diskFilter[0].resize) || Number(diskFilter[0].size);
+    totalSize = parseFloat(diskFilter[0].resize) || parseFloat(diskFilter[0].size) || 0;
     
-    // Convert units
-    if ((disk.size / 1024) >= 1024 || totalSize >= 1024) {
-      diskSize = ((disk.size / 1024) / 1024).toFixed(1);
+    if ((diskSize / 1024) >= 1024 || totalSize >= 1024) {
+      diskSize = ((diskSize / 1024) / 1024).toFixed(1);
       totalSize = (totalSize / 1024).toFixed(1);
       extension = "GB";
-    } else if (disk.size >= 1024 || totalSize >= 1) {
-      diskSize = (disk.size / 1024).toFixed(1);
+    } else if (diskSize >= 1024 || totalSize >= 1) {
+      diskSize = (diskSize / 1024).toFixed(1);
       extension = "MB";
     } else {
-      diskSize = disk.size.toFixed(1);
+      diskSize = diskSize.toFixed(1);
     }
     
-    // Set size display
-    if (!isNaN(totalSize)) {
-      document.getElementById(`${disk.name}-size`).textContent = `${diskSize} ${extension} / ${totalSize} ${extension}`;
+    try {
+      const diskNameElement = document.getElementById(`${disk.name}-name`);
+      if (diskNameElement) {
+        diskNameElement.textContent = disk.name;
+      }
       
-      // Update progress bar
-      const percentage = Math.min(((diskSize / totalSize) * 100).toFixed(0), 100);
+      const diskSizeElement = document.getElementById(`${disk.name}-size`);
+      if (diskSizeElement) {
+        diskSizeElement.textContent = `${diskSize} ${extension} / ${totalSize} ${extension}`;
+      }
+      
+      const percentage = Math.min(Math.max(((diskSize / totalSize) * 100).toFixed(0), 0), 100);
       const progressElement = document.getElementById(`${disk.name}-progress`);
       const progressTextElement = document.getElementById(`${disk.name}-progress-text`);
       
-      progressElement.style.width = `${percentage}%`;
-      progressTextElement.textContent = `${percentage}%`;
-      
-      // Update progress color based on usage
-      progressElement.classList.remove('progress-low', 'progress-medium', 'progress-high');
-      
-      if (percentage >= 90) {
-        progressElement.classList.add('progress-high');
-      } else if (percentage >= 70) {
-        progressElement.classList.add('progress-medium');
-      } else {
-        progressElement.classList.add('progress-low');
+      if (progressElement && progressTextElement) {
+        progressElement.style.width = `${percentage}%`;
+        progressTextElement.textContent = `${percentage}%`;
+        
+        progressElement.classList.remove('progress-low', 'progress-medium', 'progress-high');
+        
+        if (percentage >= 90) {
+          progressElement.classList.add('progress-high');
+        } else if (percentage >= 70) {
+          progressElement.classList.add('progress-medium');
+        } else {
+          progressElement.classList.add('progress-low');
+        }
       }
+    } catch (e) {
+      console.error("Disk güncelleme hatası:", e);
     }
   } else {
-    // Handle simple display without total size
-    if ((disk.size / 1024) >= 1024) {
-      diskSize = ((disk.size / 1024) / 1024).toFixed(1);
+    if ((diskSize / 1024) >= 1024) {
+      diskSize = ((diskSize / 1024) / 1024).toFixed(1);
       extension = "GB";
-    } else if (disk.size >= 1024) {
-      diskSize = (disk.size / 1024).toFixed(1);
+    } else if (diskSize >= 1024) {
+      diskSize = (diskSize / 1024).toFixed(1);
       extension = "MB";
     } else {
-      diskSize = disk.size.toFixed(1);
+      diskSize = diskSize.toFixed(1);
     }
     
-    document.getElementById(`${disk.name}-size`).textContent = `${diskSize} ${extension}`;
+    const diskSizeElement = document.getElementById(`${disk.name}-size`);
+    if (diskSizeElement) {
+      diskSizeElement.textContent = `${diskSize} ${extension}`;
+    }
   }
 }
 
-// User interaction functions
 function copyusername() {
   copy(systemsinfo.user, "Username");
 }
@@ -457,22 +559,31 @@ function showAlert(message, isError = false) {
   alertBox.classList.toggle("alert-error", isError);
   alertBox.classList.add("show");
   
-  // Auto-hide after 5 seconds
   setTimeout(() => {
     alertBox.classList.remove("show");
   }, 5000);
 }
 
-// Control functions
 function reboot() {
-  if (timeoutdb) return;
+  if (timeoutdb) {
+    showAlert("İşleminiz hala devam ediyor, lütfen bekleyin");
+    return;
+  }
   
   if (!resetdb) {
     showAlert("Are you sure you want to reinstall the system? Click again if you are sure.");
     resetdb = true;
+    
+    setTimeout(() => {
+      if (resetdb) {
+        resetdb = false;
+        console.log("Onay süresi doldu");
+      }
+    }, 10000);
   } else {
     resetdb = false;
     timeoutdb = true;
+    console.log("Sistemi yeniden başlatma isteği gönderiliyor");
     socket.emit("panelservers", { action: "installos" });
     showAlert("Please wait reinstalling");
     setTimeout(() => timeoutdb = false, 10000);
@@ -480,16 +591,27 @@ function reboot() {
 }
 
 function setup() {
-  if (timeoutdb) return;
+  if (timeoutdb) {
+    showAlert("İşleminiz hala devam ediyor, lütfen bekleyin");
+    return;
+  }
   
   const selectedOS = document.getElementById("osSelect").value;
   
   if (rebootdb != selectedOS) {
-    showAlert(`Are you sure you want to ${selectedOS} install the system? Click again if you are sure.`);
+    showAlert(`Are you sure you want to install ${selectedOS}? Click again if you are sure.`);
     rebootdb = selectedOS;
+    
+    setTimeout(() => {
+      if (rebootdb === selectedOS) {
+        rebootdb = "";
+        console.log("OS kurulum onay süresi doldu");
+      }
+    }, 10000);
   } else {
     rebootdb = "";
     timeoutdb = true;
+    console.log(`${selectedOS} kurulum isteği gönderiliyor`);
     socket.emit("panelservers", { action: "installos", changeos: selectedOS });
     showAlert(`Please wait installing ${selectedOS}`);
     setTimeout(() => timeoutdb = false, 10000);
@@ -497,27 +619,42 @@ function setup() {
 }
 
 function start() {
-  if (!startdb || timeoutdb) return;
+  if (!startdb || timeoutdb) {
+    if (!startdb) showAlert("Makine zaten çalışıyor");
+    if (timeoutdb) showAlert("İşleminiz hala devam ediyor, lütfen bekleyin");
+    return;
+  }
   
   timeoutdb = true;
+  console.log("Makine başlatma isteği gönderiliyor");
   socket.emit("panelservers", { action: "start" });
   showAlert("Starting, You must wait 10 seconds to process again");
   setTimeout(() => timeoutdb = false, 10000);
 }
 
 function shutdown() {
-  if (!shutdowndb || timeoutdb) return;
+  if (!shutdowndb || timeoutdb) {
+    if (!shutdowndb) showAlert("Makine zaten kapalı");
+    if (timeoutdb) showAlert("İşleminiz hala devam ediyor, lütfen bekleyin");
+    return;
+  }
   
   timeoutdb = true;
+  console.log("Makine kapatma isteği gönderiliyor");
   socket.emit("panelservers", { action: "shutdown" });
-  showAlert("Shutdowning, You must wait 10 seconds to process again");
+  showAlert("Shutting down, You must wait 10 seconds to process again");
   setTimeout(() => timeoutdb = false, 10000);
 }
 
 function reset() {
-  if (!resetbuttondb || timeoutdb) return;
+  if (!resetbuttondb || timeoutdb) {
+    if (!resetbuttondb) showAlert("Makine çalışmıyor, önce başlatın");
+    if (timeoutdb) showAlert("İşleminiz hala devam ediyor, lütfen bekleyin");
+    return;
+  }
   
   timeoutdb = true;
+  console.log("Makine sıfırlama isteği gönderiliyor");
   socket.emit("panelservers", { action: "reset" });
   showAlert("Resetting, You must wait 10 seconds to process again");
   setTimeout(() => timeoutdb = false, 10000);
@@ -525,6 +662,8 @@ function reset() {
 
 function setchart(type, value) {
   if (isNaN(Number(value))) return;
+  
+  value = Math.max(0, Number(value));
   
   if (type === "cpu") {
     cpuchart = [cpuchart[1], cpuchart[2], cpuchart[3], cpuchart[4], value];
@@ -535,6 +674,16 @@ function setchart(type, value) {
   }
 }
 
-// Initialize charts on load
 updateCpuChart();
 updateRamChart();
+
+window.addEventListener('load', function() {
+  if (ejs.disks && Array.isArray(ejs.disks)) {
+    console.log("Başlangıç disk bilgileri yükleniyor", ejs.disks);
+    ejs.disks.forEach(disk => {
+      if (disk && disk.name) {
+        createDiskElement(disk);
+      }
+    });
+  }
+});

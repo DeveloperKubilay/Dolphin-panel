@@ -43,9 +43,11 @@
                 <div id="connections">
                     <% if(machine.ports.mainport){ 
                         if(machine.ports.mainport.split(':').length > 1) 
-                            machine.ports.mainport = machine.ports.mainport.split(':')[1] %>
-                        <button id="btnRdp" class="connection-btn btn-rdp" onclick="copy('<%= machine.ip %>'+':'+'<%= machine.ports.mainport %>','RDP')">
-                            RDP: <%= machine.ip+":"+machine.ports.mainport %>
+                            machine.ports.mainport = machine.ports.mainport.split(':')[1];
+                        const connectionType = machine.os == "linux" ? "SSH" : "RDP";
+                    %>
+                        <button id="btnRdp" class="connection-btn btn-rdp" onclick="copy('<%= machine.ip %>'+':'+'<%= machine.ports.mainport %>','<%= connectionType %>')">
+                            <%= connectionType %>: <%= machine.ip+":"+machine.ports.mainport %>
                         </button>
                     <% } if(machine.ports.vnc){ %>
                         <button id="btnVnc" class="connection-btn btn-vnc" onclick="copy('<%= machine.ip %>'+':'+'<%= (5900+Number(machine.ports.vnc)) %>','VNC')">
