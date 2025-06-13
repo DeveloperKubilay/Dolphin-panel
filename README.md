@@ -2,6 +2,9 @@
 
 ## 📸 Screenshots
 
+![img1](https://raw.githubusercontent.com/DeveloperKubilay/Dolphin-panel/refs/heads/main/pages/img/info/1.png)
+![img2](https://raw.githubusercontent.com/DeveloperKubilay/Dolphin-panel/refs/heads/main/pages/img/info/2.png)
+
 
 > **The ultimate VDS management solution that just hits different.**
 
